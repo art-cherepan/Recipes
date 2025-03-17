@@ -1,0 +1,75 @@
+# Файлы, созданные Android Studio
+.idea/
+*.iml
+.gradle/
+build/
+captures/
+local.properties
+*.apk
+*.ap_
+*.keystore
+*.jks
+*.log
+*.tlog
+.navigation/
+.externalNativeBuild/
+.cxx/
+*.hprof
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Логи и временные файлы
+*.log
+*.bak
+*.tmp
+*.swp
+*~.nib
+
+# Файлы сборки и зависимости
+/android/
+/keystores/
+/release/
+/output.json
+
+# Gradle
+gradle-wrapper.jar
+!gradle-wrapper.jar
+gradle.properties
+
+# Игнорировать папки сборки модулей
+**/build/
+**/app/build/
+
+# Firebase и Crashlytics
+google-services.json
+google-services.xml
+crashlytics.properties
+crashlytics-build.properties
+
+# Файлы эмулятора
+*.avd
+*.lock
+
+# NDK
+obj/
+.externalNativeBuild/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Дополнительные настройки
+**/.settings/
+**/*.pbxuser
+**/*.perspectivev3
+**/*.xcworkspace
