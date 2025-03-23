@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="TextAppearance.AppCompat.StyleTitle14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    
+    <style name="Widget.Material3.Button.StyleNavButton">
+
+    </style>
+
+</resources>
