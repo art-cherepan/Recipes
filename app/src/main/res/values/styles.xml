@@ -9,7 +9,8 @@
     </style>
     
     <style name="Widget.Material3.Button.StyleNavButton">
-
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.StyleTitle14</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
 </resources>

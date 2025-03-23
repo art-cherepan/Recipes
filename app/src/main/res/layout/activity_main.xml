@@ -28,7 +28,7 @@
             android:backgroundTint="#525DC0"
             android:text="@string/btn_category"
             android:fontFamily="@font/montserrat_alternates_regular"
-            style="@style/TextAppearance.AppCompat.StyleTitle14"
+            style="@style/Widget.Material3.Button.StyleNavButton"
             android:layout_weight="1" />
 
         <Button
@@ -38,7 +38,7 @@
             android:fontFamily="@font/montserrat_alternates_regular"
             android:layout_weight="1"
             android:text="@string/btn_favorites"
-            style="@style/TextAppearance.AppCompat.StyleTitle14"
+            style="@style/Widget.Material3.Button.StyleNavButton"
             app:icon="@drawable/ic_heart_empty"
             app:iconTint="#FFFFFF"
             app:iconGravity="end" />
