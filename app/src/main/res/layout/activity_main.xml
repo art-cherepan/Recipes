@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4FAFF"
+    android:background="@color/app_background_color"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingEnd="@dimen/padding_medium"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,25 +22,25 @@
         tools:ignore="RtlSymmetry">
 
         <Button
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="#525DC0"
-            android:text="@string/btn_category"
+            android:layout_marginEnd="@dimen/layout_margin_end"
+            android:backgroundTint="@color/category_btn_color"
+            android:text="@string/btn_category_name"
             android:fontFamily="@font/montserrat_alternates_regular"
             style="@style/Widget.Material3.Button.StyleNavButton"
             android:layout_weight="1" />
 
         <Button
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
-            android:backgroundTint="#E13E3E"
+            android:backgroundTint="@color/favorites_btn_color"
             android:fontFamily="@font/montserrat_alternates_regular"
             android:layout_weight="1"
-            android:text="@string/btn_favorites"
+            android:text="@string/btn_favorites_name"
             style="@style/Widget.Material3.Button.StyleNavButton"
             app:icon="@drawable/ic_heart_empty"
-            app:iconTint="#FFFFFF"
+            app:iconTint="@color/ic_heart_color"
             app:iconGravity="end" />
     </LinearLayout>
 
