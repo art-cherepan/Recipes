@@ -22,7 +22,6 @@
     <style name="StyleCategoriesTextView">
         <item name="android:textAppearance">@style/StyleTitle20</item>
         <item name="android:textColor">@color/categories_tv_color</item>
-        <item name="cornerRadius">8dp</item>
     </style>
 
 </resources>
