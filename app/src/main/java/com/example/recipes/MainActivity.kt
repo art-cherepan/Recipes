@@ -6,8 +6,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import com.example.recipes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -15,6 +19,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<CategoryListFragment>(R.id.mainContainer)
+            }
+        }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnCategories.setOnClickListener {
+            supportFragmentManager.commit {
+                replace<CategoryListFragment>(R.id.mainContainer)
+                setReorderingAllowed(true)
+                addToBackStack("categoryListFragment")
+            }
+        }
+
+        binding.btnFavorites.setOnClickListener {
+            supportFragmentManager.commit {
+                replace<FavoritesFragment>(R.id.mainContainer)
+                setReorderingAllowed(true)
+                addToBackStack("favoritesFragment")
             }
         }
 
