@@ -9,7 +9,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipes.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
