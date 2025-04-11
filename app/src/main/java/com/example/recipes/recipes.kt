@@ -8,37 +8,37 @@ object STUB {
             id = 0,
             title = "Бургеры",
             description = "Рецепты всех популярных видов бургеров",
-            imageUrl = "app/src/main/assets/burger.png",
+            imageUrl = "burger.png",
         ),
         Category(
             id = 1,
             title = "Десерты",
             description = "Самые вкусные рецепты десертов специально для вас",
-            imageUrl = "app/src/main/assets/dessert.png",
+            imageUrl = "dessert.png",
         ),
         Category(
             id = 2,
             title = "Пицца",
             description = "Пицца на любой вкус и цвет. Лучшая подборка для тебя",
-            imageUrl = "app/src/main/assets/pizza.png",
+            imageUrl = "pizza.png",
         ),
         Category(
             id = 3,
             title = "Рыба",
             description = "Печеная, жареная, сушеная, любая рыба на твой вкус",
-            imageUrl = "app/src/main/assets/fish.png",
+            imageUrl = "fish.png",
         ),
         Category(
             id = 4,
             title = "Супы",
             description = "От классики до экзотики: мир в одной тарелке",
-            imageUrl = "app/src/main/assets/soup.png",
+            imageUrl = "soup.png",
         ),
         Category(
             id = 5,
             title = "Салаты",
             description = "Хрустящий калейдоскоп под соусом вдохновения",
-            imageUrl = "app/src/main/assets/salad.png",
+            imageUrl = "salad.png",
         ),
     )
 
