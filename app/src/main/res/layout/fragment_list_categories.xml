@@ -9,8 +9,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="224dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="@dimen/fragment_list_categories_header_height"
+            android:layout_marginTop="@dimen/fragment_list_categories_header_margin_top"
             android:background="@color/category_list_header_background_color">
 
                 <ImageView
@@ -25,11 +25,11 @@
                     android:id="@+id/textView2"
                     style="@style/StyleTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
+                    android:layout_height="@dimen/fragment_list_categories_header_text_view_height"
                     android:background="@drawable/shape_rounded_tv"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginStart="16dp"
-                    android:padding="10dp"
+                    android:layout_marginTop="@dimen/fragment_list_categories_header_text_view_margin_top"
+                    android:layout_marginStart="@dimen/fragment_list_categories_header_text_view_margin_start"
+                    android:padding="@dimen/fragment_list_categories_header_text_view_padding"
                     android:text="@string/categories_name"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -43,8 +43,8 @@
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_marginVertical="@dimen/main_space_16"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="6"
+            app:spanCount="@integer/grid_span_count"
+            tools:itemCount="@integer/grid_item_count"
             tools:listitem="@layout/item_category">
 
         </androidx.recyclerview.widget.RecyclerView>
