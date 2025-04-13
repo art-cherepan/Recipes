@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
-    android:background="@color/app_background_color"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:background="@drawable/shape_rounded_tv"
-            style="@style/StyleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="196dp"
-            android:maxWidth="334dp"
-            android:text="@string/categories_name" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/category_list_header_background_color">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/bcg_categories"
+                    android:scaleType="centerCrop">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/StyleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:background="@drawable/shape_rounded_tv"
+                    android:padding="10dp"
+                    android:text="@string/categories_name"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="164dp"
+                    tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
