@@ -15,7 +15,8 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height">
+                android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height"
+                android:contentDescription="@string/category_item_default_image_description">
             </ImageView>
             
             <LinearLayout

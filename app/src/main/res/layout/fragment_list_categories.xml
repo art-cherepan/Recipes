@@ -16,6 +16,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/category_list_default_header_image"
                     android:src="@drawable/bcg_categories"
                     android:scaleType="centerCrop">
 

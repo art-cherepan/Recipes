@@ -2,4 +2,6 @@
     <string name="app_name">Recipes</string>
     <string name="categories_name">категории</string>
     <string name="favorites_name">избранное</string>
+    <string name="category_item_default_image_description">Category item image</string>
+    <string name="category_list_default_header_image">Category list default header image</string>
 </resources>
