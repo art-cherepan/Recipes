@@ -8,4 +8,5 @@
     <color name="favorites_btn_color">#E13E3E</color>
     <color name="ic_heart_color">#FFFFFF</color>
     <color name="categories_tv_color">#5F3678</color>
+    <color name="item_category_tv_description_color">#666666</color>
 </resources>
