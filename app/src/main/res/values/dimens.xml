@@ -9,8 +9,6 @@
     <dimen name="fragment_list_categories_header_text_view_margin_top">164dp</dimen>
     <dimen name="fragment_list_categories_header_text_view_margin_start">16dp</dimen>
     <dimen name="fragment_list_categories_header_text_view_padding">10dp</dimen>
-    <dimen name="recycler_view_item_category_card_view_layout_width">156dp</dimen>
-    <dimen name="recycler_view_item_category_card_view_layout_height">220dp</dimen>
     <dimen name="recycler_view_item_category_card_view_card_corner_radius">8dp</dimen>
     <dimen name="recycler_view_item_category_card_view_image_view_layout_height">130dp</dimen>
     <dimen name="recycler_view_item_category_card_view_card_linear_layout_layout_height">90dp</dimen>
