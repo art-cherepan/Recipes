@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/recycler_view_item_category_card_view_layout_width"
+    android:layout_height="@dimen/recycler_view_item_category_card_view_layout_height"
+    android:layout_marginHorizontal="@dimen/main_space_16"
+    android:layout_marginVertical="@dimen/main_space_16"
+    android:clickable="true"
+    app:cardCornerRadius="@dimen/recycler_view_item_category_card_view_card_corner_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height"
+            android:contentDescription="@string/category_item_default_image_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/burgers" />
+
+        <TextView
+            style="@style/StyleItemCategoryTextViewHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/main_space_half_8"
+            tools:text="@string/category_item_burgers_title" />
+
+        <TextView
+            style="@style/StyleItemCategoryTextViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/main_space_half_8"
+            tools:ignore="RtlSymmetry"
+            tools:text="@string/category_item_burgers_description" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

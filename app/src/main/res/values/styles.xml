@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
+    <style name="StyleDescription12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
@@ -22,6 +27,16 @@
     <style name="StyleTextView">
         <item name="android:textAppearance">@style/StyleTitle20</item>
         <item name="android:textColor">@color/categories_tv_color</item>
+    </style>
+
+    <style name="StyleItemCategoryTextViewHeader">
+        <item name="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textColor">@color/categories_tv_color</item>
+    </style>
+
+    <style name="StyleItemCategoryTextViewDescription">
+        <item name="android:textAppearance">@style/StyleDescription12</item>
+        <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
 </resources>
