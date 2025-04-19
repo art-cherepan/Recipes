@@ -1,9 +1,9 @@
-package com.example.recipes
+package models
 
 import com.example.recipes.entity.Category
 
-object STUB {
-    private val categories = listOf(
+class BackendSingleton {
+    private val categoryList = listOf(
         Category(
             id = 0,
             title = "Бургеры",
@@ -43,6 +43,6 @@ object STUB {
     )
 
     fun getCategories(): List<Category> {
-        return categories
+        return categoryList
     }
 }

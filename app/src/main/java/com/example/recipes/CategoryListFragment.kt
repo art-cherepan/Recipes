@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentListCategoriesBinding
+import models.BackendSingleton
 
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentListCategoriesBinding
@@ -18,5 +19,15 @@ class CategoryListFragment : Fragment() {
         binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        val categoriesAdapter = CategoriesListAdapter(BackendSingleton().getCategories())
+        binding.rvCategories.adapter = categoriesAdapter
     }
 }
