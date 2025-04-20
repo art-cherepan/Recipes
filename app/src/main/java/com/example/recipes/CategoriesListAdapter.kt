@@ -3,10 +3,7 @@ package com.example.recipes
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.databinding.ItemCategoryBinding
 import com.example.recipes.entity.Category
@@ -26,8 +23,8 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val category: Category = dataSet[position]
 
-        viewHolder.binding.tvTitle.text = category.title
-        viewHolder.binding.tvDescription.text = category.description
+        viewHolder.binding.tvCategoryTitle.text = category.title
+        viewHolder.binding.tvCategoryDescription.text = category.description
 
         val drawable = try {
             Drawable.createFromStream(
@@ -39,7 +36,8 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
             null
         }
 
-        viewHolder.binding.imageCategory.setImageDrawable(drawable)
+        viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
+        viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
     }
 
     override fun getItemCount() = dataSet.size
