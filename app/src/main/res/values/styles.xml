@@ -29,7 +29,7 @@
         <item name="android:textColor">@color/categories_tv_color</item>
     </style>
 
-    <style name="StyleItemCategoryTextViewHeader">
+    <style name="StyleItemCategoryTextViewTitle">
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:textColor">@color/categories_tv_color</item>
     </style>
