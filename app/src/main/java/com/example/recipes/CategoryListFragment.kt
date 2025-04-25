@@ -29,5 +29,13 @@ class CategoryListFragment : Fragment() {
     private fun initRecycler() {
         val categoriesAdapter = CategoriesListAdapter(BackendSingleton().getCategories())
         binding.rvCategories.adapter = categoriesAdapter
+
+        categoriesAdapter.setOnItemClickListener(object: CategoriesListAdapter.OnItemClickListener { //не понимаю зачем мы вешаем слушателя в адаптере и во фрагменте...
+            override fun onItemClick() {
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.idFragmentListCategories, RecipesListFragment())
+                    .commit()
+            }
+        })
     }
 }
