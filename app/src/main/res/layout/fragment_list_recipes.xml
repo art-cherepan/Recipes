@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/idFragmentListCategories"
+    android:id="@+id/idFragmentListRecipes"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -17,9 +16,9 @@
             android:id="@+id/ivCategoriesHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/category_list_default_header_image"
+            android:contentDescription="@string/recipes_list_default_header_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/bcg_categories" />
+            android:src="@drawable/bcg_recipes_list" />
 
         <TextView
             android:id="@+id/tvCategoriesTitle"
@@ -30,24 +29,11 @@
             android:layout_marginTop="@dimen/fragment_list_categories_header_text_view_margin_top"
             android:background="@drawable/shape_rounded_tv"
             android:padding="@dimen/fragment_list_categories_header_text_view_padding"
-            android:text="@string/categories_name"
+            android:text="@string/category_item_burgers_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/main_space_half_8"
-        android:layout_marginVertical="@dimen/main_space_half_8"
-        android:layout_weight="@integer/recycler_view_layout_weight"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="@integer/grid_span_count"
-        tools:itemCount="@integer/grid_item_count"
-        tools:listitem="@layout/item_category">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
