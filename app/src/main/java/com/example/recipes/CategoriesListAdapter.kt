@@ -11,6 +11,16 @@ import com.example.recipes.entity.Category
 class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
+
+    private var itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
+    }
+
     inner class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +48,9 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
 
         viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
         viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
+        viewHolder.binding.categoryItemId.setOnClickListener {
+            itemClickListener?.onItemClick()
+        }
     }
 
     override fun getItemCount() = dataSet.size
