@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.recipes.databinding.FragmentListCategoriesBinding
 import models.BackendSingleton
 
@@ -30,12 +32,19 @@ class CategoryListFragment : Fragment() {
         val categoriesAdapter = CategoriesListAdapter(BackendSingleton().getCategories())
         binding.rvCategories.adapter = categoriesAdapter
 
-        categoriesAdapter.setOnItemClickListener(object: CategoriesListAdapter.OnItemClickListener { //не понимаю зачем мы вешаем слушателя в адаптере и во фрагменте...
+        categoriesAdapter.setOnItemClickListener(object :
+            CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick() {
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.idFragmentListCategories, RecipesListFragment())
-                    .commit()
+                openRecipesByCategoryId()
             }
         })
+    }
+
+    private fun openRecipesByCategoryId() {
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<RecipesListFragment>(R.id.mainContainer)
+            addToBackStack(null)
+        }
     }
 }

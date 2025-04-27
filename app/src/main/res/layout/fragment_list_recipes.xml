@@ -13,7 +13,7 @@
         android:background="@color/category_list_header_background_color">
 
         <ImageView
-            android:id="@+id/ivCategoriesHeader"
+            android:id="@+id/ivRecipesHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/recipes_list_default_header_image"
@@ -21,7 +21,7 @@
             android:src="@drawable/bcg_recipes_list" />
 
         <TextView
-            android:id="@+id/tvCategoriesTitle"
+            android:id="@+id/tvRecipesTitle"
             style="@style/StyleTextView"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/fragment_list_categories_header_text_view_height"
@@ -34,6 +34,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </LinearLayout>

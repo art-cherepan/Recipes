@@ -15,10 +15,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
         fun onItemClick()
     }
 
-    val itemClickListener: OnItemClickListener? = null
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
-        val itemClickListener = listener
+        itemClickListener = listener
     }
 
     inner class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
@@ -48,7 +48,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
 
         viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
         viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
-        viewHolder.binding.categoryItemId.setOnClickListener { //не понимаю зачем мы вешаем слушателя в адаптере и во фрагменте...
+        viewHolder.binding.categoryItemId.setOnClickListener {
             itemClickListener?.onItemClick()
         }
     }
