@@ -1,11 +1,13 @@
 package com.example.recipes
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentListRecipesBinding
+import java.io.InputStream
 
 class RecipesListFragment : Fragment() {
     private lateinit var binding: FragmentListRecipesBinding
@@ -25,6 +27,14 @@ class RecipesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListRecipesBinding.inflate(inflater, container, false)
+
+        val drawable = Drawable.createFromStream(categoryImageUrl?.let {
+            context?.assets?.open(it)
+                ?: "burger.png"
+        } as InputStream?, null)
+
+        binding.ivRecipesImageHeader.setImageDrawable(drawable)
+        binding.tvRecipesTitle.text = categoryName
 
         return binding.root
     }

@@ -13,7 +13,7 @@
         android:background="@color/category_list_header_background_color">
 
         <ImageView
-            android:id="@+id/ivRecipesHeader"
+            android:id="@+id/ivRecipesImageHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/recipes_list_default_header_image"
