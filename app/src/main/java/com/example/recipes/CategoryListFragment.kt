@@ -14,6 +14,12 @@ import models.BackendSingleton
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentListCategoriesBinding
 
+    companion object {
+        const val ARG_CATEGORY_ID = "arg_category_id"
+        const val ARG_CATEGORY_NAME = "arg_category_name"
+        const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,14 +48,15 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val category = BackendSingleton().getCategories().find { it.id == categoryId }
-        val categoryName = category?.title
-        val categoryImageUrl = category?.imageUrl
+        val categories = BackendSingleton().getCategories()
+        val category = categories.find { it.id == categoryId }
+        val categoryName = category?.title ?: categories.first().title
+        val categoryImageUrl = category?.imageUrl ?: categories.first().imageUrl
 
         val bundle = bundleOf(
-            "ARG_CATEGORY_ID" to categoryId,
-            "ARG_CATEGORY_NAME" to categoryName,
-            "ARG_CATEGORY_IMAGE_URL" to categoryImageUrl,
+            ARG_CATEGORY_ID to categoryId,
+            ARG_CATEGORY_NAME to categoryName,
+            ARG_CATEGORY_IMAGE_URL to categoryImageUrl,
         )
 
         parentFragmentManager.commit {

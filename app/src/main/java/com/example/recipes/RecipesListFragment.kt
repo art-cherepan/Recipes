@@ -13,16 +13,32 @@ class RecipesListFragment : Fragment() {
     private var categoryName: String? = null
     private var categoryImageUrl: String? = null
 
+    companion object {
+        const val ARG_CATEGORY_ID = "arg_category_id"
+        const val ARG_CATEGORY_NAME = "arg_category_name"
+        const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        categoryId = requireArguments().getInt("ARG_CATEGORY_ID")
-        categoryName = requireArguments().getString("ARG_CATEGORY_NAME")
-        categoryImageUrl = requireArguments().getString("ARG_CATEGORY_IMAGE_URL")
         binding = FragmentListRecipesBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initBundleData()
+    }
+
+    private fun initBundleData() {
+        arguments?.let { args ->
+            categoryId = args.getInt(ARG_CATEGORY_ID)
+            categoryName = args.getString(ARG_CATEGORY_NAME)
+            categoryImageUrl = args.getString(ARG_CATEGORY_IMAGE_URL)
+        } ?: throw IllegalStateException("Arguments must not be null")
     }
 }
