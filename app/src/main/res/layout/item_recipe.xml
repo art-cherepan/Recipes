@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/main_space_half_8"
+        android:layout_marginVertical="@dimen/main_space_half_8"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_effect"
+        app:cardCornerRadius="@dimen/recycler_view_item_category_card_view_card_corner_radius">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recycler_view_item_recipe_card_view_image_view_layout_height"
+                android:scaleType="centerCrop"
+                android:src="@drawable/burgers" />
+
+            <TextView
+                android:id="@+id/tvCategoryTitle"
+                style="@style/StyleItemCategoryTextViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/main_space_half_8"
+                tools:text="@string/recipes_item_classic_burgers_title" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

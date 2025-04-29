@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 replace<CategoryListFragment>(R.id.mainContainer)
                 setReorderingAllowed(true)
-                addToBackStack("categoryListFragment")
+                addToBackStack(null)
             }
         }
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 replace<FavoritesFragment>(R.id.mainContainer)
                 setReorderingAllowed(true)
-                addToBackStack("favoritesFragment")
+                addToBackStack(null)
             }
         }
 
