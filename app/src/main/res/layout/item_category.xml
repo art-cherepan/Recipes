@@ -21,6 +21,7 @@
                 android:id="@+id/ivCategoryImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height"
+                android:contentDescription="@string/recipes_category_default_header_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/burgers" />
 
