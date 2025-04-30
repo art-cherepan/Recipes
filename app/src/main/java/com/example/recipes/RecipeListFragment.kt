@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentListRecipesBinding
 import java.io.InputStream
 
-class RecipesListFragment : Fragment() {
+class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentListRecipesBinding
     private var categoryId: Int? = null
     private var categoryName: String? = null
