@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_background_color">
+
+    <TextView
+        android:id="@+id/tvFragmentRecipe"
+        style="@style/StyleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="196dp"
+        android:background="@drawable/shape_rounded_tv"
+        android:maxWidth="334dp"
+        android:text="@string/recipe_default_title" />
+
+</LinearLayout>
