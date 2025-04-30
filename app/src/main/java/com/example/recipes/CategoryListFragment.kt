@@ -13,6 +13,7 @@ import models.BackendSingleton
 
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentListCategoriesBinding
+    private val categories = BackendSingleton().getCategories()
 
     companion object {
         const val ARG_CATEGORY_ID = "arg_category_id"
@@ -36,7 +37,7 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val categoriesAdapter = CategoriesListAdapter(BackendSingleton().getCategories())
+        val categoriesAdapter = CategoriesListAdapter(categories)
         binding.rvCategories.adapter = categoriesAdapter
 
         categoriesAdapter.setOnItemClickListener(object :
@@ -48,7 +49,6 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val categories = BackendSingleton().getCategories()
         val category = categories.find { it.id == categoryId }
         val categoryName = category?.title ?: categories.first().title
         val categoryImageUrl = category?.imageUrl ?: categories.first().imageUrl
