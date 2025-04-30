@@ -28,6 +28,13 @@ class RecipesListFragment : Fragment() {
     ): View {
         binding = FragmentListRecipesBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initBundleData()
+
         val drawable = Drawable.createFromStream(categoryImageUrl?.let {
             context?.assets?.open(it)
                 ?: "burger.png"
@@ -35,13 +42,6 @@ class RecipesListFragment : Fragment() {
 
         binding.ivRecipesImageHeader.setImageDrawable(drawable)
         binding.tvRecipesTitle.text = categoryName
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initBundleData()
     }
 
     private fun initBundleData() {
