@@ -37,11 +37,11 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val categoriesAdapter = CategoriesListAdapter(categories)
+        val categoriesAdapter = CategoryListAdapter(categories)
         binding.rvCategories.adapter = categoriesAdapter
 
         categoriesAdapter.setOnItemClickListener(object :
-            CategoriesListAdapter.OnItemClickListener {
+            CategoryListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
                 openRecipesByCategoryId(categoryId)
             }
