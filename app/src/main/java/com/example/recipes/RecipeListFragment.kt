@@ -59,5 +59,16 @@ class RecipeListFragment : Fragment() {
         val recipes = categoryId?.let { BackendSingleton().getRecipesByCategoryId(it) }
         val recipeListAdapter = recipes?.let { RecipeListAdapter(it) }
         binding.rvRecipes.adapter = recipeListAdapter
+
+        recipeListAdapter?.setOnItemClickListener(object :
+            RecipeListAdapter.OnItemClickListener {
+            override fun onItemClick(recipeId: Int) {
+                openRecipeByRecipeId(recipeId)
+            }
+        })
+    }
+
+    private fun openRecipeByRecipeId(recipeId: Int) {
+
     }
 }

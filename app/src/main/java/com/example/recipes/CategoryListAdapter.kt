@@ -48,7 +48,7 @@ class CategoryListAdapter(private val dataSet: List<Category>) :
 
         viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
         viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
-        viewHolder.binding.categoryItemId.setOnClickListener {
+        viewHolder.binding.cvCategoryItem.setOnClickListener {
             itemClickListener?.onItemClick(category.id)
         }
     }

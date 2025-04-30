@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvRecipeItem"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/main_space_half_8"
