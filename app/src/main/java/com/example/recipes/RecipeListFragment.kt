@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentListRecipesBinding
+import models.BackendSingleton
 import java.io.InputStream
 
 class RecipeListFragment : Fragment() {
@@ -42,6 +43,8 @@ class RecipeListFragment : Fragment() {
 
         binding.ivRecipesImageHeader.setImageDrawable(drawable)
         binding.tvRecipesTitle.text = categoryName
+
+        initRecycler()
     }
 
     private fun initBundleData() {
@@ -50,5 +53,11 @@ class RecipeListFragment : Fragment() {
             categoryName = args.getString(ARG_CATEGORY_NAME)
             categoryImageUrl = args.getString(ARG_CATEGORY_IMAGE_URL)
         } ?: throw IllegalStateException("Arguments must not be null")
+    }
+
+    private fun initRecycler() {
+        val recipes = categoryId?.let { BackendSingleton().getRecipesByCategoryId(it) }
+        val recipeListAdapter = recipes?.let { RecipeListAdapter(it) }
+        binding.rvRecipes.adapter = recipeListAdapter
     }
 }

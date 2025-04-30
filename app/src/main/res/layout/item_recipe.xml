@@ -18,13 +18,14 @@
             android:orientation="vertical">
             
             <ImageView
+                android:id="@+id/ivRecipeImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_recipe_card_view_image_view_layout_height"
                 android:scaleType="centerCrop"
                 android:src="@drawable/burgers" />
 
             <TextView
-                android:id="@+id/tvCategoryTitle"
+                android:id="@+id/tvRecipeTitle"
                 style="@style/StyleItemCategoryTextViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
