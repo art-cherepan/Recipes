@@ -6,4 +6,8 @@
     <string name="category_item_burgers_description">Рецепты всех популярных видов бургеров</string>
     <string name="category_list_default_header_image">Изображение экрана с категориями</string>
     <string name="recipes_list_default_header_image">Изображение экрана категории рецептов</string>
+    <string name="recipes_item_default_header_image">Изображение карточки рецепта</string>
+    <string name="recipes_category_default_header_image">Изображение категории рецепта</string>
+    <string name="recipes_item_classic_burgers_title">Классический гамбургер</string>
+    <string name="recipe_default_title">Описание рецепта</string>
 </resources>

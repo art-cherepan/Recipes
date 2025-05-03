@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.databinding.ItemCategoryBinding
-import com.example.recipes.entity.Category
+import com.example.recipes.models.Category
 
-class CategoriesListAdapter(private val dataSet: List<Category>) :
-    RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
+class CategoryListAdapter(private val dataSet: List<Category>) :
+    RecyclerView.Adapter<CategoryListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(categoryId: Int)
@@ -48,7 +48,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
 
         viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
         viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
-        viewHolder.binding.categoryItemId.setOnClickListener {
+        viewHolder.binding.cvCategoryItem.setOnClickListener {
             itemClickListener?.onItemClick(category.id)
         }
     }
