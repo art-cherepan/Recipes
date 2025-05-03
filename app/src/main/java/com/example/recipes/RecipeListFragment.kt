@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -17,11 +18,13 @@ class RecipeListFragment : Fragment() {
     private var categoryId: Int? = null
     private var categoryName: String? = null
     private var categoryImageUrl: String? = null
+    private val backendSingleton = BackendSingleton()
 
     companion object {
         const val ARG_CATEGORY_ID = "arg_category_id"
         const val ARG_CATEGORY_NAME = "arg_category_name"
         const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
+        const val ARG_RECIPE = "arg_recipe"
         const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
     }
 
@@ -70,7 +73,7 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val recipes = categoryId?.let { BackendSingleton().getRecipesByCategoryId(it) }
+        val recipes = categoryId?.let { backendSingleton.getRecipesByCategoryId(it) }
         val recipeListAdapter = recipes?.let { RecipeListAdapter(it) }
         binding.rvRecipes.adapter = recipeListAdapter
 
@@ -83,9 +86,12 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
+        val recipe = backendSingleton.getRecipeById(recipeId)
+        val bundle = bundleOf(ARG_RECIPE to recipe)
+
         parentFragmentManager.commit {
             setReorderingAllowed(true)
-            replace<RecipeFragment>(R.id.mainContainer)
+            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             addToBackStack(null)
         }
     }
