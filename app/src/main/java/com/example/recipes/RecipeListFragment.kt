@@ -2,6 +2,7 @@ package com.example.recipes
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipes.databinding.FragmentListRecipesBinding
 import models.BackendSingleton
-import java.io.InputStream
 
 class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentListRecipesBinding
@@ -22,6 +22,7 @@ class RecipeListFragment : Fragment() {
         const val ARG_CATEGORY_ID = "arg_category_id"
         const val ARG_CATEGORY_NAME = "arg_category_name"
         const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
+        const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
     }
 
     override fun onCreateView(
@@ -36,17 +37,28 @@ class RecipeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUI()
+        initRecycler()
+    }
+
+    private fun initUI() {
         initBundleData()
 
-        val drawable = Drawable.createFromStream(categoryImageUrl?.let {
-            context?.assets?.open(it)
-                ?: "burger.png"
-        } as InputStream?, null)
+        if (categoryImageUrl == null) categoryImageUrl = DEFAULT_CATEGORY_HEADER_IMG_URL
+
+        val drawable = try {
+            Drawable.createFromStream(
+                context?.assets?.open(categoryImageUrl!!),
+                null
+            )
+        } catch (e: Exception) {
+            Log.e("ImageLoadError", "Image not found: $categoryImageUrl", e)
+            null
+        }
 
         binding.ivRecipesImageHeader.setImageDrawable(drawable)
+        binding.ivRecipesImageHeader.contentDescription = "Изображение категории рецептов $categoryName"
         binding.tvRecipesTitle.text = categoryName
-
-        initRecycler()
     }
 
     private fun initBundleData() {
