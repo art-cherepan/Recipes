@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.databinding.ItemCategoryBinding
-import com.example.recipes.entity.Category
+import com.example.recipes.models.Category
 
 class CategoryListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoryListAdapter.ViewHolder>() {
