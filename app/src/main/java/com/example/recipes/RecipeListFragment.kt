@@ -59,9 +59,9 @@ class RecipeListFragment : Fragment() {
             null
         }
 
-        binding.ivRecipesImageHeader.setImageDrawable(drawable)
-        binding.ivRecipesImageHeader.contentDescription = "Изображение категории рецептов $categoryName"
-        binding.tvRecipesTitle.text = categoryName
+        binding.ivFragmentListRecipesImageHeader.setImageDrawable(drawable)
+        binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов $categoryName"
+        binding.tvFragmentListRecipesTitle.text = categoryName
     }
 
     private fun initBundleData() {
@@ -75,7 +75,7 @@ class RecipeListFragment : Fragment() {
     private fun initRecycler() {
         val recipes = categoryId?.let { backendSingleton.getRecipesByCategoryId(it) }
         val recipeListAdapter = recipes?.let { RecipeListAdapter(it) }
-        binding.rvRecipes.adapter = recipeListAdapter
+        binding.rvFragmentListRecipes.adapter = recipeListAdapter
 
         recipeListAdapter?.setOnItemClickListener(object :
             RecipeListAdapter.OnItemClickListener {
