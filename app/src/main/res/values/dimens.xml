@@ -3,6 +3,7 @@
     <dimen name="main_space_16">16dp</dimen>
     <dimen name="main_space_half_8">8dp</dimen>
     <dimen name="main_space_zero">0dp</dimen>
+    <dimen name="item_recipe_tv_padding">12dp</dimen>
     <dimen name="fragment_list_categories_header_height">224dp</dimen>
     <dimen name="fragment_list_categories_header_margin_top">32dp</dimen>
     <dimen name="fragment_header_text_view_height">44dp</dimen>

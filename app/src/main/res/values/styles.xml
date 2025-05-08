@@ -39,4 +39,9 @@
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
+    <style name="StyleRecipeTextViewDescription">
+        <item name="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textColor">@color/item_category_tv_description_color</item>
+    </style>
+
 </resources>
