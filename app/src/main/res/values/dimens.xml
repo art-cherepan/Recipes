@@ -5,10 +5,10 @@
     <dimen name="main_space_zero">0dp</dimen>
     <dimen name="fragment_list_categories_header_height">224dp</dimen>
     <dimen name="fragment_list_categories_header_margin_top">32dp</dimen>
-    <dimen name="fragment_list_categories_header_text_view_height">44dp</dimen>
-    <dimen name="fragment_list_categories_header_text_view_margin_top">164dp</dimen>
-    <dimen name="fragment_list_categories_header_text_view_margin_start">16dp</dimen>
-    <dimen name="fragment_list_categories_header_text_view_padding">10dp</dimen>
+    <dimen name="fragment_header_text_view_height">44dp</dimen>
+    <dimen name="fragment_header_text_view_margin_top">164dp</dimen>
+    <dimen name="fragment_header_text_view_margin_start">16dp</dimen>
+    <dimen name="fragment_header_text_view_padding">10dp</dimen>
     <dimen name="recycler_view_item_category_card_view_card_corner_radius">8dp</dimen>
     <dimen name="recycler_view_item_category_card_view_image_view_layout_height">130dp</dimen>
     <dimen name="recycler_view_item_recipe_card_view_image_view_layout_height">100dp</dimen>

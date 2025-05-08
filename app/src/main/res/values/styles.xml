@@ -24,7 +24,7 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <style name="StyleTextView">
+    <style name="StyleHeaderTextView">
         <item name="android:textAppearance">@style/StyleTitle20</item>
         <item name="android:textColor">@color/categories_tv_color</item>
     </style>
