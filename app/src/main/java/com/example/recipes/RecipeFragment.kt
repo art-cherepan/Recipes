@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentRecipeBinding
 import com.example.recipes.models.Recipe
@@ -83,5 +84,13 @@ class RecipeFragment : Fragment() {
         binding.rvMethod.setHasFixedSize(false)
         binding.rvMethod.isNestedScrollingEnabled = false
         binding.rvMethod.addItemDecoration(dividerForMethodAdapter)
+
+        binding.sbPortionCount.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                ingredientsAdapter.updateIngredients(progress)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
     }
 }
