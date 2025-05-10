@@ -27,6 +27,7 @@
 
             <TextView
                 android:id="@+id/tvFragmentRecipeTitle"
+                style="@style/StyleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/fragment_header_text_view_height"
                 android:layout_marginStart="@dimen/fragment_header_text_view_margin_start"
@@ -35,44 +36,76 @@
                 android:padding="@dimen/fragment_header_text_view_padding"
                 android:text="@string/category_item_burgers_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/StyleHeaderTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            style="@style/StyleHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
-            android:layout_marginVertical="@dimen/main_space_16"
-            android:text="@string/recipe_ingredients_title"
-            style="@style/StyleHeaderTextView" />
+            android:layout_marginTop="@dimen/main_space_16"
+            android:text="@string/recipe_ingredients_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recipe_ingredients_portions"
+                style="@style/StyleRecipeTextViewPortionsDescription" />
+
+            <TextView
+                android:id="@+id/tvPortionCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_recipe_portions_margin"
+                tools:text="1"
+                style="@style/StyleRecipeTextViewPortionsDescription"/>
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sbPortionCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:min="1"
+            android:max="5"
+            android:progress="1"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
+            android:layout_marginBottom="@dimen/main_space_16"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvIngredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="@integer/recycler_view_layout_weight"
             android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_weight="@integer/recycler_view_layout_weight"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_recipe_ingredient">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
+            style="@style/StyleHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_marginVertical="@dimen/main_space_16"
-            android:text="@string/recipe_cooking_method_title"
-            style="@style/StyleHeaderTextView" />
+            android:text="@string/recipe_cooking_method_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMethod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="@integer/recycler_view_layout_weight"
             android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_weight="@integer/recycler_view_layout_weight"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_recipe_ingredient">
 
