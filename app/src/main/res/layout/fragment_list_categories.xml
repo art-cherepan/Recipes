@@ -23,13 +23,13 @@
 
         <TextView
             android:id="@+id/tvCategoriesTitle"
-            style="@style/StyleTextView"
+            style="@style/StyleHeaderTextView"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fragment_list_categories_header_text_view_height"
-            android:layout_marginStart="@dimen/fragment_list_categories_header_text_view_margin_start"
-            android:layout_marginTop="@dimen/fragment_list_categories_header_text_view_margin_top"
+            android:layout_height="@dimen/fragment_header_text_view_height"
+            android:layout_marginStart="@dimen/fragment_header_text_view_margin_start"
+            android:layout_marginTop="@dimen/fragment_header_text_view_margin_top"
             android:background="@drawable/shape_rounded_tv"
-            android:padding="@dimen/fragment_list_categories_header_text_view_padding"
+            android:padding="@dimen/fragment_header_text_view_padding"
             android:text="@string/categories_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
