@@ -38,10 +38,11 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-         recipe = when {
+        recipe = when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
                 arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
             }
+
             else -> {
                 @Suppress("DEPRECATION")
                 arguments?.getParcelable(ARG_RECIPE) as? Recipe
@@ -63,19 +64,11 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        val dividerForIngredientsAdapter = MaterialDividerItemDecoration(
-            binding.rvIngredient.context,
-            MaterialDividerItemDecoration.VERTICAL,
-        )
-
-        val dividerForMethodAdapter = MaterialDividerItemDecoration(
-            binding.rvMethod.context,
-            MaterialDividerItemDecoration.VERTICAL,
-        )
+        val dividerForIngredientsAdapter = getDividerForAdapter(binding.rvIngredient)
+        val dividerForMethodAdapter = getDividerForAdapter(binding.rvMethod)
 
         val ingredientsAdapter = IngredientsAdapter(recipe.ingredients)
         binding.rvIngredient.adapter = ingredientsAdapter
-        binding.rvIngredient.setHasFixedSize(false)
         binding.rvIngredient.isNestedScrollingEnabled = false
         binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
 
@@ -85,12 +78,21 @@ class RecipeFragment : Fragment() {
         binding.rvMethod.isNestedScrollingEnabled = false
         binding.rvMethod.addItemDecoration(dividerForMethodAdapter)
 
-        binding.sbPortionCount.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        binding.sbPortionCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 ingredientsAdapter.updateIngredients(progress)
+                binding.tvPortionCount.text = progress.toString()
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
+    }
+
+    private fun getDividerForAdapter(view: View): MaterialDividerItemDecoration {
+        return MaterialDividerItemDecoration(
+            view.context,
+            MaterialDividerItemDecoration.VERTICAL,
+        )
     }
 }

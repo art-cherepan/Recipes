@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fragment_recipe_portions_margin"
-                tools:text="1"
+                android:text="@string/fragment_recipe_default_portion_count"
                 style="@style/StyleRecipeTextViewPortionsDescription"/>
         </LinearLayout>
 

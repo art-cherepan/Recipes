@@ -13,4 +13,5 @@
     <string name="recipe_ingredients_title">ингредиенты</string>
     <string name="recipe_ingredients_portions">Порции:</string>
     <string name="recipe_cooking_method_title">способ приготовления</string>
+    <string name="fragment_recipe_default_portion_count">1</string>
 </resources>

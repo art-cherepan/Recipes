@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.databinding.ItemRecipeIngredientBinding
 import com.example.recipes.models.Ingredient
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
-    private var quantity: Int = 0
+    private var quantity: Int = 1
 
     inner class ViewHolder(val binding: ItemRecipeIngredientBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -30,10 +32,12 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
         viewHolder.binding.tvRecipeIngredientTitle.text = ingredient.description
 
-        val commonQuantityToString = (ingredient.quantity.toDouble() * quantity).toString()
+        val totalQuantity = BigDecimal(ingredient.quantity) * BigDecimal(quantity)
+        val displayQuantity =
+            totalQuantity.setScale(1, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
 
         val ingredientQuantityAndUnitOfMeasure =
-            "${formatNumber(commonQuantityToString)} ${ingredient.unitOfMeasure}"
+            "$displayQuantity ${ingredient.unitOfMeasure}"
         viewHolder.binding.tvRecipeIngredientQuantity.text = ingredientQuantityAndUnitOfMeasure
     }
 
@@ -43,18 +47,5 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     fun updateIngredients(progress: Int) {
         quantity = progress
         notifyDataSetChanged()
-    }
-
-    private fun Double.isWhole() = this % 1 == 0.0
-
-    private fun formatNumber(input: String): String {
-        val cleanInput = input.replace(',', '.')
-        val number = cleanInput.toDoubleOrNull() ?: return "Ошибка: аргумент не является числом"
-
-        return if (number.isWhole()) {
-            number.toInt().toString()
-        } else {
-            "%.1f".format(number)
-        }
     }
 }
