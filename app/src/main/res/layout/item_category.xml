@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvCategoryItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/main_space_half_8"
+    android:layout_marginVertical="@dimen/main_space_half_8"
+    android:clickable="true"
+    android:foreground="@drawable/ripple_effect"
+    app:cardCornerRadius="@dimen/recycler_view_item_category_card_view_card_corner_radius">
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cvCategoryItem"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/main_space_half_8"
-        android:layout_marginVertical="@dimen/main_space_half_8"
-        android:clickable="true"
-        android:foreground="@drawable/ripple_effect"
-        app:cardCornerRadius="@dimen/recycler_view_item_category_card_view_card_corner_radius">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/ivCategoryImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height"
+            android:contentDescription="@string/recipes_category_default_header_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/burgers" />
+
+        <TextView
+            android:id="@+id/tvCategoryTitle"
+            style="@style/StyleCategoryTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="@dimen/main_space_half_8"
+            tools:text="@string/category_item_burgers_title" />
 
-            <ImageView
-                android:id="@+id/ivCategoryImage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/recycler_view_item_category_card_view_image_view_layout_height"
-                android:contentDescription="@string/recipes_category_default_header_image"
-                android:scaleType="centerCrop"
-                android:src="@drawable/burgers" />
+        <TextView
+            android:id="@+id/tvCategoryDescription"
+            style="@style/StyleCategoryTextViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/main_space_half_8"
+            tools:ignore="RtlSymmetry"
+            tools:text="@string/category_item_burgers_description" />
 
-            <TextView
-                android:id="@+id/tvCategoryTitle"
-                style="@style/StyleItemCategoryTextViewTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/main_space_half_8"
-                tools:text="@string/category_item_burgers_title" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvCategoryDescription"
-                style="@style/StyleItemCategoryTextViewDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/main_space_half_8"
-                tools:ignore="RtlSymmetry"
-                tools:text="@string/category_item_burgers_description" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-</layout>
+</androidx.cardview.widget.CardView>

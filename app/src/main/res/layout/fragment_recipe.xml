@@ -1,19 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout4"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/app_background_color">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvFragmentRecipe"
-        style="@style/StyleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="196dp"
-        android:background="@drawable/shape_rounded_tv"
-        android:maxWidth="334dp"
-        android:text="@string/recipe_default_title" />
+    <LinearLayout
+        android:id="@+id/idFragmentListRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_list_categories_header_height"
+            android:layout_marginTop="@dimen/fragment_list_categories_header_margin_top"
+            android:background="@color/category_list_header_background_color">
+
+            <ImageView
+                android:id="@+id/ivFragmentRecipeImageHeader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/recipes_item_default_header_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bcg_recipes_list" />
+
+            <TextView
+                android:id="@+id/tvFragmentRecipeTitle"
+                style="@style/StyleHeaderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fragment_header_text_view_height"
+                android:layout_marginStart="@dimen/fragment_header_text_view_margin_start"
+                android:layout_marginTop="@dimen/fragment_header_text_view_margin_top"
+                android:background="@drawable/shape_rounded_tv"
+                android:padding="@dimen/fragment_header_text_view_padding"
+                android:text="@string/category_item_burgers_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            style="@style/StyleHeaderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginTop="@dimen/main_space_16"
+            android:text="@string/recipe_ingredients_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recipe_ingredients_portions"
+                style="@style/StyleRecipeTextViewPortionsDescription" />
+
+            <TextView
+                android:id="@+id/tvPortionCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_recipe_portions_margin"
+                android:text="@string/fragment_recipe_default_portion_count"
+                style="@style/StyleRecipeTextViewPortionsDescription"/>
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sbPortionCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:min="1"
+            android:max="5"
+            android:progress="1"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
+            android:layout_marginBottom="@dimen/main_space_16"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_weight="@integer/recycler_view_layout_weight"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_recipe_ingredient">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            style="@style/StyleHeaderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_marginVertical="@dimen/main_space_16"
+            android:text="@string/recipe_cooking_method_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_space_16"
+            android:layout_weight="@integer/recycler_view_layout_weight"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_recipe_ingredient">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

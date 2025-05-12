@@ -3,13 +3,18 @@
 
     <style name="StyleDescription12">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
     </style>
 
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="StyleTitle16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
     </style>
 
     <style name="StyleTitle20" parent="TextAppearance.AppCompat">
@@ -24,18 +29,28 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <style name="StyleTextView">
+    <style name="StyleHeaderTextView">
         <item name="android:textAppearance">@style/StyleTitle20</item>
         <item name="android:textColor">@color/categories_tv_color</item>
     </style>
 
-    <style name="StyleItemCategoryTextViewTitle">
+    <style name="StyleCategoryTextViewTitle">
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:textColor">@color/categories_tv_color</item>
     </style>
 
-    <style name="StyleItemCategoryTextViewDescription">
+    <style name="StyleCategoryTextViewDescription">
         <item name="android:textAppearance">@style/StyleDescription12</item>
+        <item name="android:textColor">@color/item_category_tv_description_color</item>
+    </style>
+
+    <style name="StyleRecipeTextViewDescription">
+        <item name="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textColor">@color/item_category_tv_description_color</item>
+    </style>
+
+    <style name="StyleRecipeTextViewPortionsDescription">
+        <item name="android:textAppearance">@style/StyleTitle16</item>
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
