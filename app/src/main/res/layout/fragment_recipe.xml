@@ -79,7 +79,8 @@
             android:progress="1"
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
-            android:layout_marginBottom="@dimen/main_space_16"/>
+            android:layout_marginBottom="@dimen/main_space_16"
+            style="@style/styleSeekBar"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvIngredient"

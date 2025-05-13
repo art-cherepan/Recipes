@@ -54,4 +54,9 @@
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
+    <style name="styleSeekBar">
+        <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
+        <item name="android:progressDrawable">@drawable/shape_seekbar_progress</item>
+    </style>
+
 </resources>
