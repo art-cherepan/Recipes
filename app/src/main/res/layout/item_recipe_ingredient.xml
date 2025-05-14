@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/item_recipe_tv_padding"
         tools:text="@string/recipe_ingredients_title"
-        style="@style/StyleRecipeTextViewDescription"
+        style="@style/StyleRecipeTextViewIngredient"
         tools:ignore="RtlSymmetry" />
 
     <View
@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/item_recipe_tv_padding"
         tools:text="@string/recipe_ingredients_title"
-        style="@style/StyleRecipeTextViewDescription"
+        style="@style/StyleRecipeTextViewIngredient"
         tools:ignore="RtlSymmetry" />
 </LinearLayout>

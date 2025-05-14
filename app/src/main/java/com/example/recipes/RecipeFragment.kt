@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentRecipeBinding
 import com.example.recipes.models.Recipe
@@ -90,9 +91,21 @@ class RecipeFragment : Fragment() {
     }
 
     private fun getDividerForAdapter(view: View): MaterialDividerItemDecoration {
-        return MaterialDividerItemDecoration(
+        val divider = MaterialDividerItemDecoration(
             view.context,
             MaterialDividerItemDecoration.VERTICAL,
-        )
+        ).apply {
+            isLastItemDecorated = false
+            dividerColor = context?.let {
+                ContextCompat.getColor(
+                    it,
+                    R.color.material_divider_item_decoration_color,
+                )
+            }!!
+            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.divider_insert_start) //почему-то отступ не добавился
+            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.divider_insert_end) //почему-то отступ не добавился
+        }
+
+        return divider
     }
 }
