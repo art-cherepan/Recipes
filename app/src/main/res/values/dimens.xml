@@ -21,4 +21,6 @@
     <dimen name="seek_bar_progress_height">16dp</dimen>
     <dimen name="seek_bar_thumb_width">8dp</dimen>
     <dimen name="seek_bar_thumb_height">30dp</dimen>
+    <dimen name="divider_insert_start">12dp</dimen>
+    <dimen name="divider_insert_end">12dp</dimen>
 </resources>

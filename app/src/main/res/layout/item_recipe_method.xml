@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/item_recipe_tv_padding"
-        style="@style/StyleRecipeTextViewDescription"
+        style="@style/StyleRecipeTextViewMethod"
         tools:text="@string/recipe_cooking_method_title"
         tools:ignore="RtlSymmetry" />
 </LinearLayout>

@@ -11,4 +11,5 @@
     <color name="item_category_tv_description_color">#666666</color>
     <color name="seek_bar_progress_color">#A1A9F9</color>
     <color name="seek_bar_thumb_color">#525DC0</color>
+    <color name="material_divider_item_decoration_color">#F5F5F5</color>
 </resources>

@@ -8,13 +8,18 @@
 
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="StyleTitle16">
+    <style name="Style14" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="Style16">
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
     <style name="StyleTitle20" parent="TextAppearance.AppCompat">
@@ -44,13 +49,18 @@
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
-    <style name="StyleRecipeTextViewDescription">
+    <style name="StyleRecipeTextViewIngredient">
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 
+    <style name="StyleRecipeTextViewMethod">
+        <item name="android:textAppearance">@style/Style14</item>
+        <item name="android:textColor">@color/item_category_tv_description_color</item>
+    </style>
+
     <style name="StyleRecipeTextViewPortionsDescription">
-        <item name="android:textAppearance">@style/StyleTitle16</item>
+        <item name="android:textAppearance">@style/Style16</item>
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 

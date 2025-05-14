@@ -108,7 +108,7 @@
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_weight="@integer/recycler_view_layout_weight"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_recipe_ingredient">
+            tools:listitem="@layout/item_recipe_method">
 
         </androidx.recyclerview.widget.RecyclerView>
 
