@@ -14,7 +14,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/fragment_list_categories_header_height"
-            android:layout_marginTop="@dimen/fragment_list_categories_header_margin_top"
             android:background="@color/category_list_header_background_color">
 
             <ImageView

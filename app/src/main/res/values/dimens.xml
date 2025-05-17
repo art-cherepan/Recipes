@@ -8,7 +8,6 @@
     <dimen name="item_recipe_tv_padding">12dp</dimen>
     <dimen name="fragment_recipe_portions_margin">6dp</dimen>
     <dimen name="fragment_list_categories_header_height">224dp</dimen>
-    <dimen name="fragment_list_categories_header_margin_top">32dp</dimen>
     <dimen name="fragment_header_text_view_height">44dp</dimen>
     <dimen name="fragment_header_text_view_margin_top">164dp</dimen>
     <dimen name="fragment_header_text_view_margin_start">16dp</dimen>
