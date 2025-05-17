@@ -3,6 +3,6 @@
     <solid android:color="@color/seek_bar_progress_color" />
     <corners android:radius="@dimen/main_space_quarter_4" />
     <size
-        android:height="@dimen/seek_bar_progress_height"
+        android:height="@dimen/main_space_16"
         android:width="@dimen/seek_bar_progress_width" />
 </shape>

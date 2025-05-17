@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/ivFragmentRecipeImageHeader"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/main_space_zero"
+                android:layout_height="@dimen/main_space_zero"
                 android:contentDescription="@string/recipes_item_default_header_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bcg_recipes_list" />
@@ -29,7 +29,7 @@
                 style="@style/StyleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/fragment_header_text_view_height"
-                android:layout_marginStart="@dimen/fragment_header_text_view_margin_start"
+                android:layout_marginStart="@dimen/main_space_16"
                 android:layout_marginTop="@dimen/fragment_header_text_view_margin_top"
                 android:background="@drawable/shape_rounded_tv"
                 android:padding="@dimen/fragment_header_text_view_padding"
