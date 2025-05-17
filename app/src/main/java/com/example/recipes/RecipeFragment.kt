@@ -17,6 +17,7 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
     private lateinit var recipe: Recipe
+    private var isRecipeLiked = false
 
     companion object {
         const val ARG_RECIPE = "arg_recipe"
@@ -46,7 +47,7 @@ class RecipeFragment : Fragment() {
 
             else -> {
                 @Suppress("DEPRECATION")
-                arguments?.getParcelable(ARG_RECIPE) as? Recipe
+                arguments?.getParcelable(ARG_RECIPE)
             }
         } ?: return
 
@@ -62,6 +63,14 @@ class RecipeFragment : Fragment() {
 
         binding.tvFragmentRecipeTitle.text = recipe.title
         binding.ivFragmentRecipeImageHeader.setImageDrawable(drawable)
+        binding.ibIcHeart.setImageResource(R.drawable.ic_heart_empty)
+
+        binding.ibIcHeart.setOnClickListener {
+            val isLiked = toggleLike()
+            val resId = if (isLiked) R.drawable.ic_heart else R.drawable.ic_heart_empty
+
+            binding.ibIcHeart.setImageResource(resId)
+        }
     }
 
     private fun initRecycler() {
@@ -107,5 +116,11 @@ class RecipeFragment : Fragment() {
         }
 
         return divider
+    }
+
+    private fun toggleLike(): Boolean {
+        isRecipeLiked = !isRecipeLiked
+
+        return isRecipeLiked
     }
 }
