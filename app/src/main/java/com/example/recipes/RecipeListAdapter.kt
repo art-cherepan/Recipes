@@ -21,19 +21,21 @@ class RecipeListAdapter(private val dataSet: List<Recipe>) :
         itemClickListener = listener
     }
 
-    inner class ViewHolder(val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(
+        val binding: ItemRecipeBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): RecipeListAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ItemRecipeBinding.inflate(inflater, viewGroup, false)
 
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(viewHolder: RecipeListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val recipe: Recipe = dataSet[position]
 
         viewHolder.binding.tvRecipeTitle.text = recipe.title

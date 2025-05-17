@@ -4,5 +4,5 @@
     <corners android:radius="@dimen/main_space_half_quarter_2" />
     <size
         android:height="@dimen/seek_bar_thumb_height"
-        android:width="@dimen/seek_bar_thumb_width" />
+        android:width="@dimen/main_space_half_8" />
 </shape>
