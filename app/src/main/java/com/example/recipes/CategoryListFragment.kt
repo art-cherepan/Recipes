@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipes.databinding.FragmentListCategoriesBinding
-import models.BackendSingleton
 
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentListCategoriesBinding

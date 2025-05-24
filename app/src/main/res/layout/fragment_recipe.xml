@@ -18,34 +18,50 @@
 
             <ImageView
                 android:id="@+id/ivFragmentRecipeImageHeader"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/main_space_zero"
+                android:layout_height="@dimen/main_space_zero"
                 android:contentDescription="@string/recipes_item_default_header_image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bcg_recipes_list" />
+                android:src="@drawable/bcg_recipes_list"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/tvFragmentRecipeTitle"
-                style="@style/StyleHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/fragment_header_text_view_height"
-                android:layout_marginStart="@dimen/fragment_header_text_view_margin_start"
+                android:layout_marginStart="@dimen/main_space_16"
                 android:layout_marginTop="@dimen/fragment_header_text_view_margin_top"
                 android:background="@drawable/shape_rounded_tv"
                 android:padding="@dimen/fragment_header_text_view_padding"
                 android:text="@string/category_item_burgers_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/StyleHeaderTextView" />
 
+            <ImageButton
+                android:id="@+id/ibIcHeart"
+                android:layout_width="@dimen/fragment_recipe_ic_heart_margin"
+                android:layout_height="@dimen/fragment_recipe_ic_heart_margin"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/fragment_recipe_ic_heart_description"
+                android:layout_marginTop="@dimen/main_space_16"
+                android:layout_marginEnd="@dimen/main_space_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_heart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            style="@style/StyleHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_marginTop="@dimen/main_space_16"
-            android:text="@string/recipe_ingredients_title" />
+            android:text="@string/recipe_ingredients_title"
+            style="@style/StyleHeaderTextView" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,9 +89,9 @@
             android:id="@+id/sbPortionCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:min="1"
-            android:max="5"
-            android:progress="1"
+            android:min="@integer/seek_bar_portion_count_min"
+            android:max="@integer/seek_bar_portion_count_max"
+            android:progress="@integer/seek_bar_progress"
             android:layout_marginHorizontal="@dimen/main_space_16"
             android:layout_marginTop="@dimen/fragment_recipe_portions_margin"
             android:layout_marginBottom="@dimen/main_space_16"
@@ -86,7 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
-            android:layout_weight="@integer/recycler_view_layout_weight"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_recipe_ingredient">
 
@@ -105,7 +120,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
-            android:layout_weight="@integer/recycler_view_layout_weight"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_recipe_method">
 

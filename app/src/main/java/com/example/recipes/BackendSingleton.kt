@@ -1,4 +1,4 @@
-package models
+package com.example.recipes
 
 import com.example.recipes.models.Category
 import com.example.recipes.models.Ingredient
