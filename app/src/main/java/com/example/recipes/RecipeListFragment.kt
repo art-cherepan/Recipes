@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipes.databinding.FragmentListRecipesBinding
-import models.BackendSingleton
 
 class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentListRecipesBinding
