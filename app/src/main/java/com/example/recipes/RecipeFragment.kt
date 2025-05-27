@@ -1,5 +1,6 @@
 package com.example.recipes
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.recipes.databinding.FragmentRecipeBinding
 import com.example.recipes.models.Recipe
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import androidx.core.content.edit
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
@@ -24,9 +26,7 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeBinding.inflate(inflater, container, false)
 
@@ -46,15 +46,13 @@ class RecipeFragment : Fragment() {
             }
 
             else -> {
-                @Suppress("DEPRECATION")
-                arguments?.getParcelable(ARG_RECIPE)
+                @Suppress("DEPRECATION") arguments?.getParcelable(ARG_RECIPE)
             }
         } ?: return
 
         val drawable = try {
             Drawable.createFromStream(
-                context?.assets?.open(recipe.imageUrl),
-                null
+                context?.assets?.open(recipe.imageUrl), null
             )
         } catch (e: Exception) {
             Log.e("ImageLoadError", "Image not found: ${recipe.imageUrl}", e)
@@ -63,13 +61,27 @@ class RecipeFragment : Fragment() {
 
         binding.tvFragmentRecipeTitle.text = recipe.title
         binding.ivFragmentRecipeImageHeader.setImageDrawable(drawable)
-        binding.ibIcHeart.setImageResource(R.drawable.ic_heart_empty)
+
+        val favoriteRecipeIds: MutableSet<String> = getFavorites().toMutableSet()
+        setIcHeartImage(favoriteRecipeIds)
 
         binding.ibIcHeart.setOnClickListener {
             val isLiked = toggleLike()
             val resId = if (isLiked) R.drawable.ic_heart else R.drawable.ic_heart_empty
 
             binding.ibIcHeart.setImageResource(resId)
+
+            if (isLiked) {
+                favoriteRecipeIds.add(recipe.id.toString())
+                val immutableSet: Set<String> = favoriteRecipeIds
+
+                saveFavorites(immutableSet)
+            } else {
+                favoriteRecipeIds.removeIf { it == recipe.id.toString() }
+                val immutableSet: Set<String> = favoriteRecipeIds
+
+                saveFavorites(immutableSet)
+            }
         }
     }
 
@@ -111,8 +123,10 @@ class RecipeFragment : Fragment() {
                     R.color.material_divider_item_decoration_color,
                 )
             }!!
-            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.divider_insert_start) //почему-то отступ не добавился
-            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.divider_insert_end) //почему-то отступ не добавился
+            dividerInsetStart =
+                resources.getDimensionPixelSize(R.dimen.divider_insert_start) //почему-то отступ не добавился
+            dividerInsetEnd =
+                resources.getDimensionPixelSize(R.dimen.divider_insert_end) //почему-то отступ не добавился
         }
 
         return divider
@@ -122,5 +136,46 @@ class RecipeFragment : Fragment() {
         isRecipeLiked = !isRecipeLiked
 
         return isRecipeLiked
+    }
+
+    private fun isRecipeLiked(recipe: Recipe, likedIds: Set<String>): Boolean {
+        return recipe.id.toString() in likedIds
+    }
+
+    private fun setIcHeartImage(recipeIds: Set<String>) {
+        val isLiked = isRecipeLiked(recipe, recipeIds)
+        isRecipeLiked = isLiked
+
+        with(binding) {
+            ibIcHeart.setImageResource(
+                if (isLiked) R.drawable.ic_heart else R.drawable.ic_heart_empty
+            )
+        }
+    }
+
+    private fun saveFavorites(favoriteRecipeIds: Set<String>) {
+        val sharedPreferences = context?.getSharedPreferences(
+            getString(R.string.favorite_recipes_preferences),
+            Context.MODE_PRIVATE,
+        )
+        sharedPreferences?.edit {
+            putStringSet(
+                getString(R.string.favorite_recipes_key),
+                favoriteRecipeIds,
+            )
+            apply()
+        }
+    }
+
+    private fun getFavorites(): Set<String> {
+        val sharedPreferences = context?.getSharedPreferences(
+            getString(R.string.favorite_recipes_preferences),
+            Context.MODE_PRIVATE,
+        )
+
+        return sharedPreferences?.getStringSet(
+            getString(R.string.favorite_recipes_key),
+            emptySet()
+        )?.toSet() ?: emptySet()
     }
 }

@@ -20,14 +20,14 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int,
-    ): IngredientsAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ItemRecipeIngredientBinding.inflate(inflater, viewGroup, false)
 
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(viewHolder: IngredientsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
 
         viewHolder.binding.tvRecipeIngredientTitle.text = ingredient.description
