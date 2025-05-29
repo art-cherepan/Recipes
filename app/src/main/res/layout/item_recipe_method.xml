@@ -11,7 +11,7 @@
         android:id="@+id/tvRecipeMethodDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_recipe_tv_padding"
+        android:paddingVertical="@dimen/main_space_half_8"
         style="@style/StyleRecipeTextViewMethod"
         tools:text="@string/recipe_cooking_method_title"
         tools:ignore="RtlSymmetry" />

@@ -24,13 +24,13 @@
             android:id="@+id/tvFragmentListRecipesTitle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/fragment_header_text_view_height"
-            android:layout_marginStart="@dimen/main_space_16"
-            android:layout_marginTop="@dimen/fragment_header_text_view_margin_top"
             android:background="@drawable/shape_rounded_tv"
             android:padding="@dimen/fragment_header_text_view_padding"
             android:text="@string/category_item_burgers_title"
+            android:layout_marginStart="@dimen/main_space_16"
+            android:layout_marginBottom="@dimen/main_space_16"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             style="@style/StyleHeaderTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

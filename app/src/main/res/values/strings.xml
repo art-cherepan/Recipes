@@ -15,6 +15,4 @@
     <string name="recipe_cooking_method_title">способ приготовления</string>
     <string name="fragment_recipe_default_portion_count">1</string>
     <string name="fragment_recipe_ic_heart_description">Добавить в избранное</string>
-    <string name="favorite_recipes_preferences">favorite_recipes_prefs</string>
-    <string name="favorite_recipes_key">com.example.recipes.FAVORITE_RECIPES_KEY</string>
 </resources>

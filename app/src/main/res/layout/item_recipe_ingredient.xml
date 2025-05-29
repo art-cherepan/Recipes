@@ -11,7 +11,7 @@
         android:id="@+id/tvRecipeIngredientTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_recipe_tv_padding"
+        android:layout_marginVertical="@dimen/main_space_half_8"
         style="@style/StyleRecipeTextViewIngredient"
         tools:text="@string/recipe_ingredients_title"
         tools:ignore="RtlSymmetry" />
@@ -25,7 +25,7 @@
         android:id="@+id/tvRecipeIngredientQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_recipe_tv_padding"
+        android:layout_marginVertical="@dimen/main_space_half_8"
         style="@style/StyleRecipeTextViewIngredient"
         tools:text="@string/recipe_ingredients_title"
         tools:ignore="RtlSymmetry" />

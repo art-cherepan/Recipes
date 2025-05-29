@@ -3,10 +3,16 @@
 
     <style name="StyleDescription12">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
+        <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
     <style name="StyleTitle14" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="StyleTitleRegular14" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textAllCaps">true</item>
@@ -50,7 +56,7 @@
     </style>
 
     <style name="StyleRecipeTextViewIngredient">
-        <item name="android:textAppearance">@style/StyleTitle14</item>
+        <item name="android:textAppearance">@style/StyleTitleRegular14</item>
         <item name="android:textColor">@color/item_category_tv_description_color</item>
     </style>
 

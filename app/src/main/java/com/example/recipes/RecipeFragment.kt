@@ -123,10 +123,6 @@ class RecipeFragment : Fragment() {
                     R.color.material_divider_item_decoration_color,
                 )
             }!!
-            dividerInsetStart =
-                resources.getDimensionPixelSize(R.dimen.divider_insert_start) //почему-то отступ не добавился
-            dividerInsetEnd =
-                resources.getDimensionPixelSize(R.dimen.divider_insert_end) //почему-то отступ не добавился
         }
 
         return divider
@@ -155,12 +151,12 @@ class RecipeFragment : Fragment() {
 
     private fun saveFavorites(favoriteRecipeIds: Set<String>) {
         val sharedPreferences = context?.getSharedPreferences(
-            getString(R.string.favorite_recipes_preferences),
+            Constants.FAVORITE_RECIPES_PREFERENCES,
             Context.MODE_PRIVATE,
         )
         sharedPreferences?.edit {
             putStringSet(
-                getString(R.string.favorite_recipes_key),
+                Constants.FAVORITE_RECIPES_KEY,
                 favoriteRecipeIds,
             )
             apply()
@@ -169,12 +165,12 @@ class RecipeFragment : Fragment() {
 
     private fun getFavorites(): Set<String> {
         val sharedPreferences = context?.getSharedPreferences(
-            getString(R.string.favorite_recipes_preferences),
+            Constants.FAVORITE_RECIPES_PREFERENCES,
             Context.MODE_PRIVATE,
         )
 
         return sharedPreferences?.getStringSet(
-            getString(R.string.favorite_recipes_key),
+            Constants.FAVORITE_RECIPES_KEY,
             emptySet()
         )?.toSet() ?: emptySet()
     }
