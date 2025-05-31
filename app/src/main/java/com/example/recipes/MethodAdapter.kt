@@ -14,14 +14,14 @@ class MethodAdapter(private val dataSet: List<String>) :
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int,
-    ): MethodAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ItemRecipeMethodBinding.inflate(inflater, viewGroup, false)
 
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(viewHolder: MethodAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val method = dataSet[position]
 
         viewHolder.binding.tvRecipeMethodDescription.text = method

@@ -29,7 +29,8 @@
             style="@style/StyleCategoryTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/main_space_half_8"
+            android:layout_marginStart="@dimen/main_space_half_8"
+            android:layout_marginTop="@dimen/main_space_half_8"
             tools:text="@string/category_item_burgers_title" />
 
         <TextView
@@ -37,7 +38,8 @@
             style="@style/StyleCategoryTextViewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/main_space_half_8"
+            android:layout_margin="@dimen/main_space_half_8"
+            android:lineHeight="@dimen/main_space_16"
             tools:ignore="RtlSymmetry"
             tools:text="@string/category_item_burgers_description" />
 
