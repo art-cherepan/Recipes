@@ -15,15 +15,12 @@ import com.example.recipes.databinding.FragmentRecipeBinding
 import com.example.recipes.models.Recipe
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import androidx.core.content.edit
+import com.example.recipes.RecipeListFragment.Companion.ARG_RECIPE
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
     private lateinit var recipe: Recipe
     private var isRecipeLiked = false
-
-    companion object {
-        const val ARG_RECIPE = "arg_recipe"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
