@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.ui.recipe
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import com.example.recipes.databinding.FragmentRecipeBinding
-import com.example.recipes.models.Recipe
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import androidx.core.content.edit
-import com.example.recipes.RecipeListFragment.Companion.ARG_RECIPE
+import androidx.fragment.app.Fragment
+import com.example.recipes.Constants
+import com.example.recipes.R
+import com.example.recipes.databinding.FragmentRecipeBinding
+import com.example.recipes.model.Recipe
+import com.example.recipes.ui.recipe.list.RecipeListFragment
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
@@ -39,11 +41,11 @@ class RecipeFragment : Fragment() {
     private fun initUI() {
         recipe = when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
-                arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
+                arguments?.getParcelable(RecipeListFragment.Companion.ARG_RECIPE, Recipe::class.java)
             }
 
             else -> {
-                @Suppress("DEPRECATION") arguments?.getParcelable(ARG_RECIPE)
+                @Suppress("DEPRECATION") arguments?.getParcelable(RecipeListFragment.Companion.ARG_RECIPE)
             }
         } ?: return
 

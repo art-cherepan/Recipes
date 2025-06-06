@@ -8,6 +8,8 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipes.databinding.ActivityMainBinding
+import com.example.recipes.ui.category.CategoryListFragment
+import com.example.recipes.ui.recipe.favorite.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

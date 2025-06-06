@@ -1,8 +1,8 @@
-package com.example.recipes
+package com.example.recipes.data
 
-import com.example.recipes.models.Category
-import com.example.recipes.models.Ingredient
-import com.example.recipes.models.Recipe
+import com.example.recipes.model.Category
+import com.example.recipes.model.Ingredient
+import com.example.recipes.model.Recipe
 
 class BackendSingleton {
     private val categoryList = listOf(
