@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.ui.recipe.favorite
 
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +9,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.example.recipes.RecipeListFragment.Companion.ARG_RECIPE
+import com.example.recipes.Constants
+import com.example.recipes.R
+import com.example.recipes.ui.recipe.RecipeFragment
+import com.example.recipes.ui.recipe.list.RecipeListAdapter
+import com.example.recipes.ui.recipe.list.RecipeListFragment
+import com.example.recipes.data.BackendSingleton
 import com.example.recipes.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
@@ -59,7 +64,7 @@ class FavoritesFragment : Fragment() {
 
     private fun openRecipeByRecipeId(recipeId: Int) {
         val recipe = backendSingleton.getRecipeById(recipeId)
-        val bundle = bundleOf(ARG_RECIPE to recipe)
+        val bundle = bundleOf(RecipeListFragment.Companion.ARG_RECIPE to recipe)
 
         parentFragmentManager.commit {
             setReorderingAllowed(true)
