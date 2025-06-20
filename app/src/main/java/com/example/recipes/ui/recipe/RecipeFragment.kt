@@ -12,6 +12,7 @@ import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.recipes.Constants
 import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeBinding
@@ -22,6 +23,7 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
     private lateinit var recipe: Recipe
+    private val recipeUiStateModel: RecipeViewModel by viewModels()
     private var isRecipeLiked = false
 
     override fun onCreateView(
@@ -36,6 +38,11 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         initRecycler()
+        recipeUiStateModel.recipeUiState.observe(viewLifecycleOwner) {
+            item -> Log.i("!!!", "Changed UI state. isFavorite: ${item.isFavorite}")
+        }
+
+        recipeUiStateModel.toggleFavorite()
     }
 
     private fun initUI() {
