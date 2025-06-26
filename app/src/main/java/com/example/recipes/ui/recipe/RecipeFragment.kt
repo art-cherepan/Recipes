@@ -38,7 +38,7 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         initRecycler()
-        recipeUiStateModel.recipeUiState.observe(viewLifecycleOwner) {
+        recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item -> Log.i("!!!", "Changed UI state. isFavorite: ${item.isFavorite}")
         }
 

@@ -17,17 +17,17 @@ data class RecipeUiState(
 )
 
 class RecipeViewModel : ViewModel() {
-    private val mutableRecipeUiState = MutableLiveData<RecipeUiState>()
-    val recipeUiState: LiveData<RecipeUiState> = mutableRecipeUiState
+    private val _recipeState = MutableLiveData(RecipeUiState())
+    val recipeState: LiveData<RecipeUiState> = _recipeState
 
     init {
-        mutableRecipeUiState.value = RecipeUiState()
-        Log.i("!!!", "Init UI state. isFavorite: ${mutableRecipeUiState.value?.isFavorite}")
+        _recipeState.value = RecipeUiState()
+        Log.i("!!!", "Init UI state. isFavorite: ${_recipeState.value?.isFavorite}")
     }
 
     fun toggleFavorite() {
-        val current = mutableRecipeUiState.value ?: RecipeUiState()
+        val current = _recipeState.value ?: RecipeUiState()
         val toggleFavorite = !current.isFavorite
-        mutableRecipeUiState.value = current.copy(isFavorite = toggleFavorite)
+        _recipeState.value = current.copy(isFavorite = toggleFavorite)
     }
 }
