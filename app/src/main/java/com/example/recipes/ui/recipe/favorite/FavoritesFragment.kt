@@ -63,8 +63,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = backendSingleton.getRecipeById(recipeId)
-        val bundle = bundleOf(RecipeListFragment.Companion.ARG_RECIPE to recipe)
+        val bundle = bundleOf(RecipeListFragment.Companion.ARG_RECIPE_ID to recipeId)
 
         parentFragmentManager.commit {
             setReorderingAllowed(true)

@@ -26,7 +26,7 @@ class RecipeListFragment : Fragment() {
         const val ARG_CATEGORY_ID = "arg_category_id"
         const val ARG_CATEGORY_NAME = "arg_category_name"
         const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
-        const val ARG_RECIPE = "arg_recipe"
+        const val ARG_RECIPE_ID = "arg_recipe_id"
         const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
     }
 
@@ -88,8 +88,7 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe = backendSingleton.getRecipeById(recipeId)
-        val bundle = bundleOf(ARG_RECIPE to recipe)
+        val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
 
         parentFragmentManager.commit {
             setReorderingAllowed(true)
