@@ -1,8 +1,6 @@
 package com.example.recipes.ui.recipe
 
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,21 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.recipes.Constants
 import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeBinding
-import com.example.recipes.model.Recipe
 import com.example.recipes.ui.recipe.list.RecipeListFragment
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
-    private lateinit var recipe: Recipe
     private val recipeUiStateModel: RecipeViewModel by viewModels()
-    private var isRecipeLiked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,56 +32,39 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         initRecycler()
-        recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
-            item -> Log.i("!!!", "Changed UI state. isFavorite: ${item.isFavorite}")
-        }
-
-        recipeUiStateModel.toggleFavorite()
     }
 
     private fun initUI() {
-        recipe = when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
-                arguments?.getParcelable(RecipeListFragment.Companion.ARG_RECIPE, Recipe::class.java)
-            }
+        recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
+            item ->
+                binding.tvFragmentRecipeTitle.text = item.recipe?.title
 
-            else -> {
-                @Suppress("DEPRECATION") arguments?.getParcelable(RecipeListFragment.Companion.ARG_RECIPE)
-            }
-        } ?: return
+                val drawable = try {
+                    Drawable.createFromStream(
+                        context?.assets?.open(item.recipe?.imageUrl ?: Constants.DEFAULT_RECIPE_IMAGE_URL), null
+                    )
+                } catch (e: Exception) {
+                    Log.e("ImageLoadError", "Image not found: ${item.recipe?.imageUrl}", e)
+                    null
+                }
 
-        val drawable = try {
-            Drawable.createFromStream(
-                context?.assets?.open(recipe.imageUrl), null
-            )
-        } catch (e: Exception) {
-            Log.e("ImageLoadError", "Image not found: ${recipe.imageUrl}", e)
-            null
+                binding.ivFragmentRecipeImageHeader.setImageDrawable(drawable)
         }
 
-        binding.tvFragmentRecipeTitle.text = recipe.title
-        binding.ivFragmentRecipeImageHeader.setImageDrawable(drawable)
+        recipeUiStateModel.loadRecipe(
+            arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID)
+        )
 
-        val favoriteRecipeIds: MutableSet<String> = getFavorites().toMutableSet()
-        setIcHeartImage(favoriteRecipeIds)
+        setIcHeartImage(
+            recipeIds = recipeUiStateModel.getFavorites(),
+            recipeId = arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID)
+        )
 
         binding.ibIcHeart.setOnClickListener {
-            val isLiked = toggleLike()
-            val resId = if (isLiked) R.drawable.ic_heart else R.drawable.ic_heart_empty
+            val isLiked = recipeUiStateModel.onFavoritesClicked()
+            val resId = if (isLiked == true) R.drawable.ic_heart else R.drawable.ic_heart_empty
 
             binding.ibIcHeart.setImageResource(resId)
-
-            if (isLiked) {
-                favoriteRecipeIds.add(recipe.id.toString())
-                val immutableSet: Set<String> = favoriteRecipeIds
-
-                saveFavorites(immutableSet)
-            } else {
-                favoriteRecipeIds.removeIf { it == recipe.id.toString() }
-                val immutableSet: Set<String> = favoriteRecipeIds
-
-                saveFavorites(immutableSet)
-            }
         }
     }
 
@@ -95,12 +72,12 @@ class RecipeFragment : Fragment() {
         val dividerForIngredientsAdapter = getDividerForAdapter(binding.rvIngredient)
         val dividerForMethodAdapter = getDividerForAdapter(binding.rvMethod)
 
-        val ingredientsAdapter = IngredientsAdapter(recipe.ingredients)
+        val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value!!.recipe!!.ingredients)
         binding.rvIngredient.adapter = ingredientsAdapter
         binding.rvIngredient.isNestedScrollingEnabled = false
         binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
 
-        val methodAdapter = MethodAdapter(recipe.method)
+        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value!!.recipe!!.method)
         binding.rvMethod.adapter = methodAdapter
         binding.rvMethod.setHasFixedSize(false)
         binding.rvMethod.isNestedScrollingEnabled = false
@@ -134,50 +111,13 @@ class RecipeFragment : Fragment() {
         return divider
     }
 
-    private fun toggleLike(): Boolean {
-        isRecipeLiked = !isRecipeLiked
-
-        return isRecipeLiked
-    }
-
-    private fun isRecipeLiked(recipe: Recipe, likedIds: Set<String>): Boolean {
-        return recipe.id.toString() in likedIds
-    }
-
-    private fun setIcHeartImage(recipeIds: Set<String>) {
-        val isLiked = isRecipeLiked(recipe, recipeIds)
-        isRecipeLiked = isLiked
+    private fun setIcHeartImage(recipeIds: Set<String>, recipeId: Int?) {
+        val isLiked = recipeId.toString() in recipeIds
 
         with(binding) {
             ibIcHeart.setImageResource(
                 if (isLiked) R.drawable.ic_heart else R.drawable.ic_heart_empty
             )
         }
-    }
-
-    private fun saveFavorites(favoriteRecipeIds: Set<String>) {
-        val sharedPreferences = context?.getSharedPreferences(
-            Constants.FAVORITE_RECIPES_PREFERENCES,
-            Context.MODE_PRIVATE,
-        )
-        sharedPreferences?.edit {
-            putStringSet(
-                Constants.FAVORITE_RECIPES_KEY,
-                favoriteRecipeIds,
-            )
-            apply()
-        }
-    }
-
-    private fun getFavorites(): Set<String> {
-        val sharedPreferences = context?.getSharedPreferences(
-            Constants.FAVORITE_RECIPES_PREFERENCES,
-            Context.MODE_PRIVATE,
-        )
-
-        return sharedPreferences?.getStringSet(
-            Constants.FAVORITE_RECIPES_KEY,
-            emptySet()
-        )?.toSet() ?: emptySet()
     }
 }
