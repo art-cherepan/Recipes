@@ -2,6 +2,8 @@ package com.example.recipes.ui.recipe
 
 import android.app.Application
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -16,8 +18,8 @@ data class RecipeUiState(
     val portionCount: Int = 0,
     val ingredients: List<Ingredient> = listOf(),
     val method: List<String> = listOf(),
-    val imageUrl: String? = null,
     val isFavorite: Boolean = false,
+    val recipeImage: Drawable? = null,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -32,7 +34,21 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val favoriteRecipeIds = getFavorites()
         val isFavorite = id.toString() in favoriteRecipeIds
 
-        _recipeState.value = current.copy(recipe = recipe, isFavorite = isFavorite, portionCount = current.portionCount)
+        val drawable = try {
+            Drawable.createFromStream(
+                application.assets?.open(recipe.imageUrl), null
+            )
+        } catch (e: Exception) {
+            Log.e("ImageLoadError", "Image not found: ${recipe.imageUrl}", e)
+            null
+        }
+
+        _recipeState.value = current.copy(
+            recipe = recipe,
+            isFavorite = isFavorite,
+            portionCount = current.portionCount,
+            recipeImage = drawable,
+        )
     }
 
     fun onFavoritesClicked(): Boolean? {

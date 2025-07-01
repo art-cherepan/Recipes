@@ -1,8 +1,6 @@
 package com.example.recipes.ui.recipe
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.recipes.Constants
 import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeBinding
 import com.example.recipes.ui.recipe.list.RecipeListFragment
@@ -38,17 +35,7 @@ class RecipeFragment : Fragment() {
         recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item ->
                 binding.tvFragmentRecipeTitle.text = item.recipe?.title
-
-                val drawable = try {
-                    Drawable.createFromStream(
-                        context?.assets?.open(item.recipe?.imageUrl ?: Constants.DEFAULT_RECIPE_IMAGE_URL), null
-                    )
-                } catch (e: Exception) {
-                    Log.e("ImageLoadError", "Image not found: ${item.recipe?.imageUrl}", e)
-                    null
-                }
-
-                binding.ivFragmentRecipeImageHeader.setImageDrawable(drawable)
+                binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
         }
 
         recipeUiStateModel.loadRecipe(
