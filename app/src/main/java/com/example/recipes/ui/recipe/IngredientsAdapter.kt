@@ -14,6 +14,10 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
     private var quantity: Int = 1
 
+    fun setQuantity(quantity: Int) {
+        this.quantity = quantity
+    }
+
     inner class ViewHolder(val binding: ItemRecipeIngredientBinding) :
         RecyclerView.ViewHolder(binding.root)
 
