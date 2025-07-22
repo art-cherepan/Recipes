@@ -15,7 +15,7 @@ import com.example.recipes.model.Recipe
 
 data class RecipeUiState(
     val recipe: Recipe? = null,
-    val portionCount: Int = 0,
+    val portionCount: Int = 1,
     val ingredients: List<Ingredient> = listOf(),
     val method: List<String> = listOf(),
     val isFavorite: Boolean = false,

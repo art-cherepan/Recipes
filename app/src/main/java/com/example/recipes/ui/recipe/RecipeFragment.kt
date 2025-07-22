@@ -31,15 +31,18 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
+        recipeUiStateModel.loadRecipe(
+            arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
+        )
+
+        val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value?.recipe?.ingredients ?: emptyList())
+
         recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item ->
                 binding.tvFragmentRecipeTitle.text = item.recipe?.title
                 binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
+                ingredientsAdapter.setPortionCount(item.portionCount)
         }
-
-        recipeUiStateModel.loadRecipe(
-            arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
-        )
 
         setIcHeartImage(
             recipeIds = recipeUiStateModel.getFavorites(),
@@ -56,13 +59,11 @@ class RecipeFragment : Fragment() {
         val dividerForIngredientsAdapter = getDividerForAdapter(binding.rvIngredient)
         val dividerForMethodAdapter = getDividerForAdapter(binding.rvMethod)
 
-        val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value!!.recipe!!.ingredients)
-        ingredientsAdapter.setQuantity(recipeUiStateModel.recipeState.value!!.portionCount)
         binding.rvIngredient.adapter = ingredientsAdapter
         binding.rvIngredient.isNestedScrollingEnabled = false
         binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
 
-        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value!!.recipe!!.method)
+        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value?.recipe?.method ?: emptyList())
         binding.rvMethod.adapter = methodAdapter
         binding.rvMethod.setHasFixedSize(false)
         binding.rvMethod.isNestedScrollingEnabled = false
