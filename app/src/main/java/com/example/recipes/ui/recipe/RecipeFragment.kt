@@ -36,6 +36,7 @@ class RecipeFragment : Fragment() {
         )
 
         val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value?.recipe?.ingredients ?: emptyList())
+        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value?.recipe?.method ?: emptyList())
 
         recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item ->
@@ -63,21 +64,13 @@ class RecipeFragment : Fragment() {
         binding.rvIngredient.isNestedScrollingEnabled = false
         binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
 
-        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value?.recipe?.method ?: emptyList())
         binding.rvMethod.adapter = methodAdapter
         binding.rvMethod.setHasFixedSize(false)
         binding.rvMethod.isNestedScrollingEnabled = false
         binding.rvMethod.addItemDecoration(dividerForMethodAdapter)
 
-        binding.sbPortionCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                ingredientsAdapter.updateIngredients(progress)
-                recipeUiStateModel.updatePortionCount(progress)
-                binding.tvPortionCount.text = progress.toString()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        binding.sbPortionCount.setOnSeekBarChangeListener(PortionSeekBarListener {
+            recipeUiStateModel.updatePortionCount(progress)         //откуда получать progress ?
         })
     }
 
@@ -107,4 +100,18 @@ class RecipeFragment : Fragment() {
             )
         }
     }
+}
+
+class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) : SeekBar.OnSeekBarChangeListener {
+    override fun onProgressChanged(
+        p0: SeekBar?,
+        progress: Int,
+        p2: Boolean
+    ) {
+        onChangeIngredients(progress)
+    }
+
+    override fun onStartTrackingTouch(p0: SeekBar?) {}
+
+    override fun onStopTrackingTouch(p0: SeekBar?) {}
 }
