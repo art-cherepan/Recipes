@@ -12,7 +12,11 @@ import java.math.RoundingMode
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
-    private var quantity: Int = 1
+    private var portionCount: Int = 1
+
+    fun setPortionCount(portionCount: Int) {
+        this.portionCount = portionCount
+    }
 
     inner class ViewHolder(val binding: ItemRecipeIngredientBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -32,7 +36,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
         viewHolder.binding.tvRecipeIngredientTitle.text = ingredient.description
 
-        val totalQuantity = BigDecimal(ingredient.quantity) * BigDecimal(quantity)
+        val totalQuantity = BigDecimal(ingredient.quantity) * BigDecimal(portionCount)
         val displayQuantity =
             totalQuantity.setScale(1, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
 
@@ -45,7 +49,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateIngredients(progress: Int) {
-        quantity = progress
+        portionCount = progress
         notifyDataSetChanged()
     }
 }
