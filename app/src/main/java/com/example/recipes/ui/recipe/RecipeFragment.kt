@@ -35,14 +35,17 @@ class RecipeFragment : Fragment() {
             arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
         )
 
-        val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value?.recipe?.ingredients ?: emptyList())
-        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value?.recipe?.method ?: emptyList())
+        val ingredientsAdapter = IngredientsAdapter(emptyList())
+        val methodAdapter = MethodAdapter(emptyList())
 
         recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item ->
                 binding.tvFragmentRecipeTitle.text = item.recipe?.title
                 binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
+                binding.tvPortionCount.text = item.portionCount.toString()
                 ingredientsAdapter.setPortionCount(item.portionCount)
+                ingredientsAdapter.dataSet = item.recipe?.ingredients ?: emptyList()
+                methodAdapter.dataSet = item.recipe?.method ?: emptyList()
         }
 
         setIcHeartImage(
