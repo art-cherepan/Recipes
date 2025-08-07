@@ -35,13 +35,17 @@ class RecipeFragment : Fragment() {
             arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
         )
 
-        val ingredientsAdapter = IngredientsAdapter(recipeUiStateModel.recipeState.value?.recipe?.ingredients ?: emptyList())
+        val ingredientsAdapter = IngredientsAdapter(emptyList())
+        val methodAdapter = MethodAdapter(emptyList())
 
         recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
             item ->
                 binding.tvFragmentRecipeTitle.text = item.recipe?.title
                 binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
+                binding.tvPortionCount.text = item.portionCount.toString()
                 ingredientsAdapter.setPortionCount(item.portionCount)
+                ingredientsAdapter.dataSet = item.recipe?.ingredients ?: emptyList()
+                methodAdapter.dataSet = item.recipe?.method ?: emptyList()
         }
 
         setIcHeartImage(
@@ -63,22 +67,16 @@ class RecipeFragment : Fragment() {
         binding.rvIngredient.isNestedScrollingEnabled = false
         binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
 
-        val methodAdapter = MethodAdapter(recipeUiStateModel.recipeState.value?.recipe?.method ?: emptyList())
         binding.rvMethod.adapter = methodAdapter
         binding.rvMethod.setHasFixedSize(false)
         binding.rvMethod.isNestedScrollingEnabled = false
         binding.rvMethod.addItemDecoration(dividerForMethodAdapter)
 
-        binding.sbPortionCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                ingredientsAdapter.updateIngredients(progress)
-                recipeUiStateModel.updatePortionCount(progress)
-                binding.tvPortionCount.text = progress.toString()
+        binding.sbPortionCount.setOnSeekBarChangeListener(
+            PortionSeekBarListener {
+                progress -> recipeUiStateModel.updatePortionCount(progress)
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
+        )
     }
 
     private fun getDividerForAdapter(view: View): MaterialDividerItemDecoration {
@@ -107,4 +105,18 @@ class RecipeFragment : Fragment() {
             )
         }
     }
+}
+
+class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) : SeekBar.OnSeekBarChangeListener {
+    override fun onProgressChanged(
+        seekBar: SeekBar?,
+        progress: Int,
+        fromUser: Boolean
+    ) {
+        onChangeIngredients(progress)
+    }
+
+    override fun onStartTrackingTouch(p0: SeekBar?) {}
+
+    override fun onStopTrackingTouch(p0: SeekBar?) {}
 }

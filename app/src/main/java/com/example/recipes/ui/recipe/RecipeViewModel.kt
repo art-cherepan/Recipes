@@ -10,14 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.recipes.Constants
 import com.example.recipes.data.BackendSingleton
-import com.example.recipes.model.Ingredient
 import com.example.recipes.model.Recipe
 
 data class RecipeUiState(
     val recipe: Recipe? = null,
     val portionCount: Int = 1,
-    val ingredients: List<Ingredient> = listOf(),
-    val method: List<String> = listOf(),
     val isFavorite: Boolean = false,
     val recipeImage: Drawable? = null,
 )
