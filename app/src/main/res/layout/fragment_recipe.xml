@@ -100,7 +100,7 @@
             style="@style/styleSeekBar"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvIngredient"
+            android:id="@+id/rv_ingredient_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"
@@ -122,7 +122,7 @@
             android:text="@string/recipe_cooking_method_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMethod"
+            android:id="@+id/rv_method_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_space_16"

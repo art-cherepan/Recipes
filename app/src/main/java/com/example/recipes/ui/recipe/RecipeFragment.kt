@@ -15,7 +15,7 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
-    private val recipeUiStateModel: RecipeViewModel by viewModels()
+    private val recipeViewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,50 +31,50 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI() {
-        recipeUiStateModel.loadRecipe(
+        recipeViewModel.loadRecipe(
             arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
         )
 
-        val ingredientsAdapter = IngredientsAdapter(emptyList())
-        val methodAdapter = MethodAdapter(emptyList())
+        val ingredientListAdapter = IngredientListAdapter(emptyList())
+        val methodListAdapter = MethodListAdapter(emptyList())
 
-        recipeUiStateModel.recipeState.observe(viewLifecycleOwner) {
+        recipeViewModel.recipeState.observe(viewLifecycleOwner) {
             item ->
                 binding.tvFragmentRecipeTitle.text = item.recipe?.title
                 binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
                 binding.tvPortionCount.text = item.portionCount.toString()
-                ingredientsAdapter.setPortionCount(item.portionCount)
-                ingredientsAdapter.dataSet = item.recipe?.ingredients ?: emptyList()
-                methodAdapter.dataSet = item.recipe?.method ?: emptyList()
+                ingredientListAdapter.setPortionCount(item.portionCount)
+                ingredientListAdapter.dataSet = item.recipe?.ingredients ?: emptyList()
+                methodListAdapter.dataSet = item.recipe?.method ?: emptyList()
         }
 
         setIcHeartImage(
-            recipeIds = recipeUiStateModel.getFavorites(),
+            recipeIds = recipeViewModel.getFavoriteRecipeList(),
             recipeId = arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID)
         )
 
         binding.ibIcHeart.setOnClickListener {
-            val isLiked = recipeUiStateModel.onFavoritesClicked()
+            val isLiked = recipeViewModel.onFavoriteRecipeListClicked()
             val resId = if (isLiked == true) R.drawable.ic_heart else R.drawable.ic_heart_empty
 
             binding.ibIcHeart.setImageResource(resId)
         }
 
-        val dividerForIngredientsAdapter = getDividerForAdapter(binding.rvIngredient)
-        val dividerForMethodAdapter = getDividerForAdapter(binding.rvMethod)
+        val dividerForIngredientsAdapter = getDividerForAdapter(binding.rvIngredientList)
+        val dividerForMethodAdapter = getDividerForAdapter(binding.rvMethodList)
 
-        binding.rvIngredient.adapter = ingredientsAdapter
-        binding.rvIngredient.isNestedScrollingEnabled = false
-        binding.rvIngredient.addItemDecoration(dividerForIngredientsAdapter)
+        binding.rvIngredientList.adapter = ingredientListAdapter
+        binding.rvIngredientList.isNestedScrollingEnabled = false
+        binding.rvIngredientList.addItemDecoration(dividerForIngredientsAdapter)
 
-        binding.rvMethod.adapter = methodAdapter
-        binding.rvMethod.setHasFixedSize(false)
-        binding.rvMethod.isNestedScrollingEnabled = false
-        binding.rvMethod.addItemDecoration(dividerForMethodAdapter)
+        binding.rvMethodList.adapter = methodListAdapter
+        binding.rvMethodList.setHasFixedSize(false)
+        binding.rvMethodList.isNestedScrollingEnabled = false
+        binding.rvMethodList.addItemDecoration(dividerForMethodAdapter)
 
         binding.sbPortionCount.setOnSeekBarChangeListener(
             PortionSeekBarListener {
-                progress -> recipeUiStateModel.updatePortionCount(progress)
+                progress -> recipeViewModel.updatePortionCount(progress)
             }
         )
     }

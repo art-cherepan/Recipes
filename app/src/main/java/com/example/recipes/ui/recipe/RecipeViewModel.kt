@@ -26,9 +26,9 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     fun loadRecipe(id: Int?) {
         val recipe = backendSingleton.getRecipeById(id)
-        val current = _recipeState.value ?: RecipeUiState()
+        val currentState = _recipeState.value ?: RecipeUiState()
 
-        val favoriteRecipeIds = getFavorites()
+        val favoriteRecipeIds = getFavoriteRecipeList()
         val isFavorite = id.toString() in favoriteRecipeIds
 
         val drawable = try {
@@ -40,30 +40,30 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             null
         }
 
-        _recipeState.value = current.copy(
+        _recipeState.value = currentState.copy(
             recipe = recipe,
             isFavorite = isFavorite,
-            portionCount = current.portionCount,
+            portionCount = currentState.portionCount,
             recipeImage = drawable,
         )
     }
 
-    fun onFavoritesClicked(): Boolean? {
+    fun onFavoriteRecipeListClicked(): Boolean? {
         val current = _recipeState.value ?: RecipeUiState()
         _recipeState.value = current.copy(isFavorite = !current.isFavorite)
 
-        val favoriteRecipeIds: MutableSet<String> = getFavorites().toMutableSet()
+        val favoriteRecipeIds: MutableSet<String> = getFavoriteRecipeList().toMutableSet()
 
         if (_recipeState.value?.isFavorite == true) {
             favoriteRecipeIds.add(_recipeState.value?.recipe?.id.toString())
             val immutableSet: Set<String> = favoriteRecipeIds
 
-            saveFavorites(immutableSet)
+            saveFavoriteRecipeList(immutableSet)
         } else {
             favoriteRecipeIds.removeIf { it == _recipeState.value?.recipe?.id.toString() }
             val immutableSet: Set<String> = favoriteRecipeIds
 
-            saveFavorites(immutableSet)
+            saveFavoriteRecipeList(immutableSet)
         }
 
         return _recipeState.value?.isFavorite
@@ -77,7 +77,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         )
     }
 
-    fun getFavorites(): Set<String> {
+    fun getFavoriteRecipeList(): Set<String> {
         val sharedPreferences = application.getSharedPreferences(
             Constants.FAVORITE_RECIPES_PREFERENCES,
             Context.MODE_PRIVATE,
@@ -89,7 +89,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         )?.toSet() ?: emptySet()
     }
 
-    private fun saveFavorites(favoriteRecipeIds: Set<String>) {
+    private fun saveFavoriteRecipeList(favoriteRecipeIds: Set<String>) {
         val sharedPreferences = application.getSharedPreferences(
             Constants.FAVORITE_RECIPES_PREFERENCES,
             Context.MODE_PRIVATE,

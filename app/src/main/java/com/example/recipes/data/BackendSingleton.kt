@@ -43,7 +43,7 @@ class BackendSingleton {
             imageUrl = "salad.png",
         ),
     )
-    private val burgerRecipes = listOf(
+    private val burgerRecipeList = listOf(
         Recipe(
             id = 0,
             title = "Классический гамбургер",
@@ -265,23 +265,23 @@ class BackendSingleton {
         )
     )
 
-    fun getCategories(): List<Category> {
+    fun getCategoryList(): List<Category> {
         return categoryList
     }
 
-    fun getRecipesByCategoryId(categoryId: Int):  List<Recipe> {
+    fun getRecipeListByCategoryId(categoryId: Int):  List<Recipe> {
         if (categoryId == 0) {
-            return burgerRecipes
+            return burgerRecipeList
         }
 
         return listOf()
     }
 
     fun getRecipeById(recipeId: Int?): Recipe {
-        return burgerRecipes.find { it.id == recipeId } ?: burgerRecipes[0]
+        return burgerRecipeList.find { it.id == recipeId } ?: burgerRecipeList[0]
     }
 
-    fun getRecipesByIds(recipeIds: Set<Int>): List<Recipe> {
-        return burgerRecipes.filter { it.id in recipeIds }
+    fun getRecipeListByIds(recipeIds: Set<Int>): List<Recipe> {
+        return burgerRecipeList.filter { it.id in recipeIds }
     }
 }

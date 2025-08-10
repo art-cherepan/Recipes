@@ -10,17 +10,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.example.recipes.R
 import com.example.recipes.ui.recipe.RecipeFragment
-import com.example.recipes.data.BackendSingleton
 import com.example.recipes.databinding.FragmentListRecipesBinding
 
 class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentListRecipesBinding
-    private var categoryId: Int? = null
-    private var categoryName: String? = null
-    private var categoryImageUrl: String? = null
-    private val backendSingleton = BackendSingleton()
+    private val recipeListViewModel: RecipeListViewModel by viewModels()
 
     companion object {
         const val ARG_CATEGORY_ID = "arg_category_id"
@@ -43,43 +40,32 @@ class RecipeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-        initRecycler()
     }
 
     private fun initUI() {
-        initBundleData()
-
-        if (categoryImageUrl == null) categoryImageUrl = DEFAULT_CATEGORY_HEADER_IMG_URL
-
-        val drawable = try {
-            Drawable.createFromStream(
-                context?.assets?.open(categoryImageUrl!!),
-                null
+        try {
+            recipeListViewModel.loadRecipeList(
+                categoryId = arguments?.getInt(ARG_CATEGORY_ID),
+                categoryName = arguments?.getString(ARG_CATEGORY_NAME),
+                categoryImageUrl = arguments?.getString(ARG_CATEGORY_IMAGE_URL)
             )
-        } catch (e: Exception) {
-            Log.e("ImageLoadError", "Image not found: $categoryImageUrl", e)
-            null
+        } catch (_: RuntimeException) {
+            throw IllegalStateException("Arguments must not be null")
         }
 
-        binding.ivFragmentListRecipesImageHeader.setImageDrawable(drawable)
-        binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов $categoryName"
-        binding.tvFragmentListRecipesTitle.text = categoryName
-    }
+        val recipeListAdapter = RecipeListAdapter(emptyList())
 
-    private fun initBundleData() {
-        arguments?.let { args ->
-            categoryId = args.getInt(ARG_CATEGORY_ID)
-            categoryName = args.getString(ARG_CATEGORY_NAME)
-            categoryImageUrl = args.getString(ARG_CATEGORY_IMAGE_URL)
-        } ?: throw IllegalStateException("Arguments must not be null")
-    }
+        recipeListViewModel.recipeListState.observe(viewLifecycleOwner) { item ->
+            val drawable = loadDrawableFromAssets(item.categoryImageUrl)
+            binding.ivFragmentListRecipesImageHeader.setImageDrawable(drawable)
+            binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов ${item.categoryName}"
+            binding.tvFragmentListRecipesTitle.text = item.categoryName
+            recipeListAdapter.dataSet = item.recipeList
+        }
 
-    private fun initRecycler() {
-        val recipes = categoryId?.let { backendSingleton.getRecipesByCategoryId(it) }
-        val recipeListAdapter = recipes?.let { RecipeListAdapter(it) }
-        binding.rvFragmentListRecipes.adapter = recipeListAdapter
+        binding.rvRecipeList.adapter = recipeListAdapter
 
-        recipeListAdapter?.setOnItemClickListener(object :
+        recipeListAdapter.setOnItemClickListener(object :
             RecipeListAdapter.OnItemClickListener {
             override fun onItemClick(recipeId: Int) {
                 openRecipeByRecipeId(recipeId)
@@ -94,6 +80,20 @@ class RecipeListFragment : Fragment() {
             setReorderingAllowed(true)
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             addToBackStack(null)
+        }
+    }
+
+    private fun loadDrawableFromAssets(imagePath: String?): Drawable? {
+        return try {
+            imagePath?.let {
+                Drawable.createFromStream(
+                    requireContext().assets.open(it),
+                    null,
+                )
+            }
+        } catch (e: Exception) {
+            Log.e("ImageLoadError", "Image not found: $imagePath", e)
+            null
         }
     }
 }

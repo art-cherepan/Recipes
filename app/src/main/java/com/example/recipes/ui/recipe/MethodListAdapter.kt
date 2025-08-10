@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.databinding.ItemRecipeMethodBinding
 
-class MethodAdapter(var dataSet: List<String>) :
-    RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
+class MethodListAdapter(var dataSet: List<String>) :
+    RecyclerView.Adapter<MethodListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemRecipeMethodBinding) :
         RecyclerView.ViewHolder(binding.root)
