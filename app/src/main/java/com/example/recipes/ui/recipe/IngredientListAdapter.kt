@@ -9,8 +9,8 @@ import com.example.recipes.model.Ingredient
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class IngredientsAdapter(var dataSet: List<Ingredient>) :
-    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+class IngredientListAdapter(var dataSet: List<Ingredient>) :
+    RecyclerView.Adapter<IngredientListAdapter.ViewHolder>() {
 
     private var portionCount: Int = 1
 

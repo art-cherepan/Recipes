@@ -8,14 +8,16 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.example.recipes.R
 import com.example.recipes.ui.recipe.list.RecipeListFragment
-import com.example.recipes.data.BackendSingleton
 import com.example.recipes.databinding.FragmentListCategoriesBinding
+import com.example.recipes.model.Category
 
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentListCategoriesBinding
-    private val categories = BackendSingleton().getCategories()
+    private val categoryListViewModel: CategoryListViewModel by viewModels()
+    private var categoryList: List<Category> = emptyList()
 
     companion object {
         const val ARG_CATEGORY_ID = "arg_category_id"
@@ -35,25 +37,33 @@ class CategoryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        initUI()
     }
 
-    private fun initRecycler() {
-        val categoriesAdapter = CategoryListAdapter(categories)
-        binding.rvCategories.adapter = categoriesAdapter
+    private fun initUI() {
+        categoryListViewModel.loadCategoryList()
 
-        categoriesAdapter.setOnItemClickListener(object :
+        val categoryListAdapter = CategoryListAdapter(emptyList())
+
+        categoryListViewModel.categoryListState.observe(viewLifecycleOwner) { item ->
+            categoryListAdapter.dataSet = item.categoryList
+            categoryList = item.categoryList
+        }
+
+        binding.rvCategoryList.adapter = categoryListAdapter
+
+        categoryListAdapter.setOnItemClickListener(object :
             CategoryListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
-                openRecipesByCategoryId(categoryId)
+                openRecipeListByCategoryId(categoryId)
             }
         })
     }
 
-    private fun openRecipesByCategoryId(categoryId: Int) {
-        val category = categories.find { it.id == categoryId }
-        val categoryName = category?.title ?: categories.first().title
-        val categoryImageUrl = category?.imageUrl ?: categories.first().imageUrl
+    private fun openRecipeListByCategoryId(categoryId: Int) {
+        val category = categoryList.find { it.id == categoryId }
+        val categoryName = category?.title ?: categoryList.first().title
+        val categoryImageUrl = category?.imageUrl ?: categoryList.first().imageUrl
 
         val bundle = bundleOf(
             ARG_CATEGORY_ID to categoryId,

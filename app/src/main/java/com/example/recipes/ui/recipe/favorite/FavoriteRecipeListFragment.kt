@@ -9,17 +9,18 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.example.recipes.Constants
 import com.example.recipes.R
 import com.example.recipes.ui.recipe.RecipeFragment
 import com.example.recipes.ui.recipe.list.RecipeListAdapter
 import com.example.recipes.ui.recipe.list.RecipeListFragment
-import com.example.recipes.data.BackendSingleton
 import com.example.recipes.databinding.FragmentFavoritesBinding
+import kotlin.getValue
 
-class FavoritesFragment : Fragment() {
+class FavoriteRecipeListFragment : Fragment() {
     private lateinit var binding: FragmentFavoritesBinding
-    private val backendSingleton = BackendSingleton()
+    private val favoriteRecipeListViewModel: FavoriteRecipeListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,14 +34,20 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        initUI()
     }
 
-    private fun initRecycler() {
-        val ids: Set<Int> = getFavorites().mapNotNull { it.toIntOrNull() }.toSet()
-        val recipes = backendSingleton.getRecipesByIds(ids)
-        val recipeListAdapter = RecipeListAdapter(recipes)
-        binding.rvFavorites.adapter = recipeListAdapter
+    private fun initUI() {
+        val ids: Set<Int> = getFavoriteRecipeList().mapNotNull { it.toIntOrNull() }.toSet()
+        favoriteRecipeListViewModel.loadFavoriteRecipeList(ids)
+
+        val recipeListAdapter = RecipeListAdapter(emptyList())
+
+        favoriteRecipeListViewModel.favoriteRecipeListState.observe(viewLifecycleOwner) { item ->
+            recipeListAdapter.dataSet = item.favoriteRecipeList
+        }
+
+        binding.rvFavoriteRecipeList.adapter = recipeListAdapter
 
         recipeListAdapter.setOnItemClickListener(object :
             RecipeListAdapter.OnItemClickListener {
@@ -50,7 +57,7 @@ class FavoritesFragment : Fragment() {
         })
     }
 
-    private fun getFavorites(): Set<String> {
+    private fun getFavoriteRecipeList(): Set<String> {
         val sharedPreferences = context?.getSharedPreferences(
             Constants.FAVORITE_RECIPES_PREFERENCES,
             Context.MODE_PRIVATE,
