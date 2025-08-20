@@ -85,12 +85,10 @@ class RecipeFragment : Fragment() {
             MaterialDividerItemDecoration.VERTICAL,
         ).apply {
             isLastItemDecorated = false
-            dividerColor = context?.let {
-                ContextCompat.getColor(
-                    it,
-                    R.color.material_divider_item_decoration_color,
-                )
-            }!!
+            dividerColor = ContextCompat.getColor(
+                requireContext(),
+                R.color.material_divider_item_decoration_color,
+            )
         }
 
         return divider
