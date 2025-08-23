@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.recipes.R
-import com.example.recipes.ui.recipe.RecipeFragment
 import com.example.recipes.databinding.FragmentListRecipesBinding
 
 class RecipeListFragment : Fragment() {
@@ -76,11 +74,7 @@ class RecipeListFragment : Fragment() {
     private fun openRecipeByRecipeId(recipeId: Int) {
         val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
 
-        parentFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 
     private fun loadDrawableFromAssets(imagePath: String?): Drawable? {
