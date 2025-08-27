@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipes.R
-import com.example.recipes.databinding.FragmentListCategoriesBinding
+import com.example.recipes.databinding.FragmentCategoryListBinding
 import com.example.recipes.model.Category
 
 class CategoryListFragment : Fragment() {
-    private lateinit var binding: FragmentListCategoriesBinding
+    private lateinit var binding: FragmentCategoryListBinding
     private val categoryListViewModel: CategoryListViewModel by viewModels()
     private var categoryList: List<Category> = emptyList()
 
@@ -28,7 +28,7 @@ class CategoryListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
+        binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
         return binding.root
     }

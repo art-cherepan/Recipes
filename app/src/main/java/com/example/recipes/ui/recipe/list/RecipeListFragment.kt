@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipes.R
-import com.example.recipes.databinding.FragmentListRecipesBinding
+import com.example.recipes.databinding.FragmentRecipeListBinding
 
 class RecipeListFragment : Fragment() {
-    private lateinit var binding: FragmentListRecipesBinding
+    private lateinit var binding: FragmentRecipeListBinding
     private val recipeListViewModel: RecipeListViewModel by viewModels()
 
     companion object {
@@ -30,7 +30,7 @@ class RecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListRecipesBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeListBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -11,13 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipes.Constants
 import com.example.recipes.R
+import com.example.recipes.databinding.FragmentFavoriteListBinding
 import com.example.recipes.ui.recipe.list.RecipeListAdapter
 import com.example.recipes.ui.recipe.list.RecipeListFragment
-import com.example.recipes.databinding.FragmentFavoritesBinding
 import kotlin.getValue
 
 class FavoriteRecipeListFragment : Fragment() {
-    private lateinit var binding: FragmentFavoritesBinding
+    private lateinit var binding: FragmentFavoriteListBinding
     private val favoriteRecipeListViewModel: FavoriteRecipeListViewModel by viewModels()
 
     override fun onCreateView(
@@ -25,7 +25,7 @@ class FavoriteRecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteListBinding.inflate(inflater, container, false)
 
         return binding.root
     }
