@@ -7,17 +7,36 @@
     <fragment
         android:id="@+id/categoryListFragment"
         android:name="com.example.recipes.ui.category.CategoryListFragment"
-        android:label="CategoryListFragment" />
+        android:label="CategoryListFragment" >
+        <action
+            android:id="@+id/action_categoryListFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteRecipeListFragment"
         android:name="com.example.recipes.ui.recipe.favorite.FavoriteRecipeListFragment"
-        android:label="FavoriteRecipeListFragment" />
+        android:label="FavoriteRecipeListFragment" >
+        <action
+            android:id="@+id/action_favoriteRecipeListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_favoriteRecipeListFragment_to_categoryListFragment"
+            app:destination="@id/categoryListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.recipes.ui.recipe.RecipeFragment"
-        android:label="RecipeFragment" />
+        android:label="RecipeFragment" >
+        <argument
+            android:name="recipeId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.example.recipes.ui.recipe.list.RecipeListFragment"
-        android:label="RecipeListFragment" />
+        android:label="RecipeListFragment" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
 </navigation>

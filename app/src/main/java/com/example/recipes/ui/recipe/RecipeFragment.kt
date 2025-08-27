@@ -8,14 +8,15 @@ import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeBinding
-import com.example.recipes.ui.recipe.list.RecipeListFragment
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class RecipeFragment : Fragment() {
     private lateinit var binding: FragmentRecipeBinding
     private val recipeViewModel: RecipeViewModel by viewModels()
+    private val args: RecipeFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,7 +33,7 @@ class RecipeFragment : Fragment() {
 
     private fun initUI() {
         recipeViewModel.loadRecipe(
-            arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID),
+            id = args.recipeId,
         )
 
         val ingredientListAdapter = IngredientListAdapter(emptyList())
@@ -50,7 +51,7 @@ class RecipeFragment : Fragment() {
 
         setIcHeartImage(
             recipeIds = recipeViewModel.getFavoriteRecipeList(),
-            recipeId = arguments?.getInt(RecipeListFragment.Companion.ARG_RECIPE_ID)
+            recipeId = args.recipeId,
         )
 
         binding.ibIcHeart.setOnClickListener {
