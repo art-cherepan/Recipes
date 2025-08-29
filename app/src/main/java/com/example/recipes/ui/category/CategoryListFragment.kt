@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.recipes.R
 import com.example.recipes.databinding.FragmentCategoryListBinding
 import com.example.recipes.model.Category
 
@@ -16,12 +14,6 @@ class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentCategoryListBinding
     private val categoryListViewModel: CategoryListViewModel by viewModels()
     private var categoryList: List<Category> = emptyList()
-
-    companion object {
-        const val ARG_CATEGORY_ID = "arg_category_id"
-        const val ARG_CATEGORY_NAME = "arg_category_name"
-        const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,15 +52,12 @@ class CategoryListFragment : Fragment() {
 
     private fun openRecipeListByCategoryId(categoryId: Int) {
         val category = categoryList.find { it.id == categoryId }
-        val categoryName = category?.title ?: categoryList.first().title
-        val categoryImageUrl = category?.imageUrl ?: categoryList.first().imageUrl
 
-        val bundle = bundleOf(
-            ARG_CATEGORY_ID to categoryId,
-            ARG_CATEGORY_NAME to categoryName,
-            ARG_CATEGORY_IMAGE_URL to categoryImageUrl,
-        )
+        if (category == null) throw IllegalArgumentException()
 
-        findNavController().navigate(R.id.recipeListFragment, bundle)
+        val action = CategoryListFragmentDirections
+            .actionCategoryListFragmentToRecipeListFragment(category = category)
+
+        findNavController().navigate(action)
     }
 }

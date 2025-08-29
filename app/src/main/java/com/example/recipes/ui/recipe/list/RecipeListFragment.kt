@@ -9,19 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.recipes.databinding.FragmentRecipeListBinding
 
 class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentRecipeListBinding
     private val recipeListViewModel: RecipeListViewModel by viewModels()
-
-    companion object {
-        const val ARG_CATEGORY_ID = "arg_category_id"
-        const val ARG_CATEGORY_NAME = "arg_category_name"
-        const val ARG_CATEGORY_IMAGE_URL = "arg_category_image_url"
-        const val ARG_RECIPE_ID = "arg_recipe_id"
-        const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
-    }
+    private val args: RecipeListFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,9 +35,9 @@ class RecipeListFragment : Fragment() {
     private fun initUI() {
         try {
             recipeListViewModel.loadRecipeList(
-                categoryId = arguments?.getInt(ARG_CATEGORY_ID),
-                categoryName = arguments?.getString(ARG_CATEGORY_NAME),
-                categoryImageUrl = arguments?.getString(ARG_CATEGORY_IMAGE_URL)
+                categoryId = args.category.id,
+                categoryName = args.category.title,
+                categoryImageUrl = args.category.imageUrl,
             )
         } catch (_: RuntimeException) {
             throw IllegalStateException("Arguments must not be null")
