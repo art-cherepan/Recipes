@@ -5,19 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipes.Constants
-import com.example.recipes.R
+import com.example.recipes.databinding.FragmentFavoriteListBinding
 import com.example.recipes.ui.recipe.list.RecipeListAdapter
-import com.example.recipes.ui.recipe.list.RecipeListFragment
-import com.example.recipes.databinding.FragmentFavoritesBinding
 import kotlin.getValue
 
 class FavoriteRecipeListFragment : Fragment() {
-    private lateinit var binding: FragmentFavoritesBinding
+    private lateinit var binding: FragmentFavoriteListBinding
     private val favoriteRecipeListViewModel: FavoriteRecipeListViewModel by viewModels()
 
     override fun onCreateView(
@@ -25,7 +22,7 @@ class FavoriteRecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteListBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -68,8 +65,9 @@ class FavoriteRecipeListFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = bundleOf(RecipeListFragment.Companion.ARG_RECIPE_ID to recipeId)
+        val action = FavoriteRecipeListFragmentDirections
+            .actionFavoriteRecipeListFragmentToRecipeFragment(recipeId = recipeId)
 
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        findNavController().navigate(action)
     }
 }

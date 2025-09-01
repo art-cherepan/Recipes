@@ -6,15 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.recipes.R
-import com.example.recipes.databinding.FragmentListRecipesBinding
+import com.example.recipes.databinding.FragmentRecipeListBinding
 
 class RecipeListFragment : Fragment() {
-    private lateinit var binding: FragmentListRecipesBinding
+    private lateinit var binding: FragmentRecipeListBinding
     private val recipeListViewModel: RecipeListViewModel by viewModels()
 
     companion object {
@@ -30,7 +28,7 @@ class RecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListRecipesBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeListBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -72,9 +70,10 @@ class RecipeListFragment : Fragment() {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = bundleOf(ARG_RECIPE_ID to recipeId)
+        val action = RecipeListFragmentDirections
+            .actionRecipeListFragmentToRecipeFragment(recipeId = recipeId)
 
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        findNavController().navigate(action)
     }
 
     private fun loadDrawableFromAssets(imagePath: String?): Drawable? {
