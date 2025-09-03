@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.recipes.data.BackendSingleton
 import com.example.recipes.model.Recipe
-import com.example.recipes.ui.recipe.list.RecipeListFragment.Companion.DEFAULT_CATEGORY_HEADER_IMG_URL
 
 data class RecipeListUiState(
     val categoryId: Int? = null,
@@ -15,6 +14,11 @@ data class RecipeListUiState(
 )
 
 class RecipeListViewModel() : ViewModel() {
+
+    companion object {
+        const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
+    }
+
     private val _recipeListState = MutableLiveData(RecipeListUiState())
     private val backendSingleton = BackendSingleton()
     val recipeListState: LiveData<RecipeListUiState> = _recipeListState

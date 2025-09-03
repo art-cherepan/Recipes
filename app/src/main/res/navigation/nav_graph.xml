@@ -4,13 +4,33 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/categoryListFragment">
 
+    <action
+        android:id="@+id/action_global_favoriteRecipeListFragment"
+        app:destination="@id/favoriteRecipeListFragment"
+        app:enterAnim="@android:anim/slide_in_left"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right" />
+
+    <action
+        android:id="@+id/action_global_categoryListFragment"
+        app:destination="@id/categoryListFragment"
+        app:enterAnim="@android:anim/slide_in_left"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right" />
+
     <fragment
         android:id="@+id/categoryListFragment"
         android:name="com.example.recipes.ui.category.CategoryListFragment"
         android:label="CategoryListFragment" >
         <action
             android:id="@+id/action_categoryListFragment_to_recipeListFragment"
-            app:destination="@id/recipeListFragment" />
+            app:destination="@id/recipeListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/favoriteRecipeListFragment"
@@ -18,10 +38,18 @@
         android:label="FavoriteRecipeListFragment" >
         <action
             android:id="@+id/action_favoriteRecipeListFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
         <action
             android:id="@+id/action_favoriteRecipeListFragment_to_categoryListFragment"
-            app:destination="@id/categoryListFragment" />
+            app:destination="@id/categoryListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -37,6 +65,13 @@
         android:label="RecipeListFragment" >
         <action
             android:id="@+id/action_recipeListFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="category"
+            app:argType="com.example.recipes.model.Category" />
     </fragment>
 </navigation>
