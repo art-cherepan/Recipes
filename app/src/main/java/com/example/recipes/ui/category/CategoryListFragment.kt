@@ -51,9 +51,7 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun openRecipeListByCategoryId(categoryId: Int) {
-        val category = categoryList.find { it.id == categoryId }
-
-        if (category == null) throw IllegalArgumentException()
+        val category = categoryList.find { it.id == categoryId } ?: throw IllegalArgumentException()
 
         val action = CategoryListFragmentDirections
             .actionCategoryListFragmentToRecipeListFragment(category = category)
