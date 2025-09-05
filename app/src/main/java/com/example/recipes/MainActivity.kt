@@ -5,11 +5,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.recipes.databinding.ActivityMainBinding
+import com.example.recipes.model.Category
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        const val GET_CATEGORIES_API_URL = "https://recipes.androidsprint.ru/api/category"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,12 +24,31 @@ class MainActivity : AppCompatActivity() {
         Log.i("!!!", "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}")
 
         val thread = Thread {
-            val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connect()
+            try {
+                val url = URL(GET_CATEGORIES_API_URL)
+                val connection = url.openConnection() as HttpURLConnection
 
-            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-            Log.i("!!!", "Body: ${connection.inputStream.bufferedReader().readText()}")
+                connection.connect()
+
+                val responseBodyText = connection.inputStream.bufferedReader().readText()
+
+                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                Log.i("!!!", "Body: $responseBodyText")
+
+                val gson = Gson()
+                val listType = object : TypeToken<List<Category>>() {}.type
+                val categoryList = gson.fromJson<List<Category>>(responseBodyText, listType)
+
+                categoryList.forEach {
+                    Log.i("!!!", "Название категории рецептов: ${it.title}")
+                }
+            } catch (e: Exception) {
+                Log.e(
+                    "ConnectionThreadException",
+                    "Ошибка: ${e.message}",
+                    e,
+                )
+            }
         }
 
         thread.start()
