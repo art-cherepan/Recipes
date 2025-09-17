@@ -8,8 +8,9 @@ import com.example.recipes.databinding.ActivityMainBinding
 import com.example.recipes.model.Category
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -37,9 +38,7 @@ class MainActivity : AppCompatActivity() {
 
                 categoryIds.forEach { categoryId ->
                     threadPool.execute {
-                        val recipes = fetchData("$GET_RECIPES_BY_CATEGORY_URL$categoryId/recipes")
-
-                        Log.i("!!!", recipes)
+                        fetchData("$GET_RECIPES_BY_CATEGORY_URL$categoryId/recipes")
                     }
                 }
             } catch (e: Exception) {
@@ -65,20 +64,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchData(url: String): String {
-        val url = URL(url)
-        val connection = url.openConnection() as HttpURLConnection
+    private fun fetchData(url: String): String? {
+        val logging = HttpLoggingInterceptor {message ->
+            Log.d("OkHttpLogTag", message)
+        }.apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
+        val request: Request = Request.Builder()
+            .url(url)
+            .build()
 
         try {
-            connection.connect()
+            return client.newCall(request).execute().use { response ->
+                response.body.string()
+            }
         } catch (e: Exception) {
             Log.e(
                 "ConnectionException",
                 "Ошибка: ${e.message}",
                 e,
             )
-        }
 
-        return connection.inputStream.bufferedReader().readText()
+            return null
+        }
     }
 }
