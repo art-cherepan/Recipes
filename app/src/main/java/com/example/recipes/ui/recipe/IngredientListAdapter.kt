@@ -35,12 +35,18 @@ class IngredientListAdapter(var dataSet: List<Ingredient>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
+        var totalQuantity: BigDecimal
+        var displayQuantity: String
 
         viewHolder.binding.tvRecipeIngredientTitle.text = ingredient.description
 
-        val totalQuantity = BigDecimal(ingredient.quantity) * BigDecimal(portionCount)
-        val displayQuantity =
-            totalQuantity.setScale(1, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
+        if (ingredient.quantity.toDoubleOrNull()?.toInt() != null) {    // с бэкенда может прилететь "по вкусу" или, например, "3.0"
+            totalQuantity = BigDecimal(ingredient.quantity) * BigDecimal(portionCount)
+            displayQuantity =
+                totalQuantity.setScale(1, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
+        } else {
+            displayQuantity = ingredient.quantity
+        }
 
         val ingredientQuantityAndUnitOfMeasure =
             "$displayQuantity ${ingredient.unitOfMeasure}"

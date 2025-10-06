@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.recipes.Constants
-import com.example.recipes.data.BackendSingleton
+import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
 
 data class RecipeUiState(
@@ -20,32 +20,60 @@ data class RecipeUiState(
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val backendSingleton = BackendSingleton()
+    private val repository = RecipesRepository()
     private val _recipeState = MutableLiveData(RecipeUiState())
     val recipeState: LiveData<RecipeUiState> = _recipeState
 
+    companion object {
+        const val DEFAULT_IMG_URL = "burger-hamburger.png"
+    }
+
     fun loadRecipe(id: Int?) {
-        val recipe = backendSingleton.getRecipeById(id)
-        val currentState = _recipeState.value ?: RecipeUiState()
+        try {
+            val future = repository.getRecipeById(id ?: 0)
+            val response = future?.get()
 
-        val favoriteRecipeIds = getFavoriteRecipeList()
-        val isFavorite = id.toString() in favoriteRecipeIds
+            if (response == null) {
+                _recipeState.postValue(null)
 
-        val drawable = try {
-            Drawable.createFromStream(
-                application.assets?.open(recipe.imageUrl), null
-            )
+                return
+            }
+
+            if (response.isSuccessful) {
+                val recipe = response.body()
+
+                val currentState = _recipeState.value ?: RecipeUiState()
+
+                val favoriteRecipeIds = getFavoriteRecipeList()
+                val isFavorite = id.toString() in favoriteRecipeIds
+
+                val drawable = try {
+                    Drawable.createFromStream(
+                        application.assets?.open(recipe?.imageUrl ?: DEFAULT_IMG_URL ),
+                        null,
+                    )
+                } catch (e: Exception) {
+                    Log.e(
+                        "ImageLoadError", "Image not found: ${recipe?.imageUrl ?: DEFAULT_IMG_URL}",
+                        e,
+                    )
+                    null
+                }
+
+                _recipeState.postValue(
+                    RecipeUiState(
+                        recipe = recipe,
+                        isFavorite = isFavorite,
+                        portionCount = currentState.portionCount,
+                        recipeImage = drawable,
+                    )
+                )
+            } else {
+                Log.e("RecipeViewModel", "Ошибка: ${response.code()}")
+            }
         } catch (e: Exception) {
-            Log.e("ImageLoadError", "Image not found: ${recipe.imageUrl}", e)
-            null
+            Log.e("RecipeViewModel", "Ошибка загрузки рецепта", e)
         }
-
-        _recipeState.value = currentState.copy(
-            recipe = recipe,
-            isFavorite = isFavorite,
-            portionCount = currentState.portionCount,
-            recipeImage = drawable,
-        )
     }
 
     fun onFavoriteRecipeListClicked(): Boolean? {

@@ -1,10 +1,12 @@
 package com.example.recipes.ui.recipe.favorite
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,15 +34,27 @@ class FavoriteRecipeListFragment : Fragment() {
         initUI()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initUI() {
         val ids: Set<Int> = getFavoriteRecipeList().mapNotNull { it.toIntOrNull() }.toSet()
-        favoriteRecipeListViewModel.loadFavoriteRecipeList(ids)
-
         val recipeListAdapter = RecipeListAdapter(emptyList())
 
-        favoriteRecipeListViewModel.favoriteRecipeListState.observe(viewLifecycleOwner) { item ->
-            recipeListAdapter.dataSet = item.favoriteRecipeList
+        favoriteRecipeListViewModel.favoriteRecipeListState.observe(viewLifecycleOwner) { state ->
+            if (state == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Ошибка получения данных",
+                    Toast.LENGTH_SHORT,
+                ).show()
+
+                return@observe
+            }
+
+            recipeListAdapter.dataSet = state.favoriteRecipeList
+            recipeListAdapter.notifyDataSetChanged()
         }
+
+        favoriteRecipeListViewModel.loadFavoriteRecipeList(ids)
 
         binding.rvFavoriteRecipeList.adapter = recipeListAdapter
 

@@ -1,9 +1,10 @@
 package com.example.recipes.ui.recipe.list
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.recipes.data.BackendSingleton
+import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
 
 data class RecipeListUiState(
@@ -20,23 +21,38 @@ class RecipeListViewModel() : ViewModel() {
     }
 
     private val _recipeListState = MutableLiveData(RecipeListUiState())
-    private val backendSingleton = BackendSingleton()
+    private val repository = RecipesRepository()
     val recipeListState: LiveData<RecipeListUiState> = _recipeListState
 
     fun loadRecipeList(categoryId: Int?, categoryName: String?, categoryImageUrl: String?) {
-        val currentState = _recipeListState.value ?: RecipeListUiState()
+        try {
+            val future = repository.getRecipeListByCategoryId(
+                categoryId = categoryId ?: 0,
+            )
+            val response = future?.get()
 
-        var categoryImageUrlUiState = categoryImageUrl
-        if (categoryImageUrl == null) categoryImageUrlUiState = DEFAULT_CATEGORY_HEADER_IMG_URL
+            if (response == null) {
+                _recipeListState.postValue(null)
 
-        val safeCategoryId = categoryId ?: 0
-        val recipeList = backendSingleton.getRecipeListByCategoryId(safeCategoryId)
+                return
+            }
 
-        _recipeListState.value = currentState.copy(
-            categoryId = categoryId,
-            categoryName = categoryName,
-            categoryImageUrl = categoryImageUrlUiState,
-            recipeList = recipeList,
-        )
+            if (response.isSuccessful) {
+                val recipeList = response.body() ?: emptyList()
+
+                _recipeListState.postValue(
+                    RecipeListUiState(
+                        categoryId = categoryId,
+                        categoryName = categoryName,
+                        categoryImageUrl = categoryImageUrl ?: DEFAULT_CATEGORY_HEADER_IMG_URL,
+                        recipeList = recipeList,
+                    )
+                )
+            } else {
+                Log.e("RecipeListViewModel", "Ошибка: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("RecipeListViewModel", "Ошибка загрузки рецептов в категорий $categoryName", e)
+        }
     }
 }

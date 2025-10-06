@@ -1,9 +1,10 @@
 package com.example.recipes.ui.recipe.favorite
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.recipes.data.BackendSingleton
+import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
 
 data class FavoriteRecipeListUiState(
@@ -11,16 +12,31 @@ data class FavoriteRecipeListUiState(
 )
 
 class FavoriteRecipeListViewModel() : ViewModel() {
+    private val repository = RecipesRepository()
     private val _favoriteRecipeListState = MutableLiveData(FavoriteRecipeListUiState())
-    private val backendSingleton = BackendSingleton()
     val favoriteRecipeListState: LiveData<FavoriteRecipeListUiState> = _favoriteRecipeListState
 
     fun loadFavoriteRecipeList(ids: Set<Int>) {
-        val favoriteRecipeList = backendSingleton.getRecipeListByIds(ids)
-        val currentState = _favoriteRecipeListState.value ?: FavoriteRecipeListUiState()
+        try {
+            val future = repository.getRecipeList(recipeIds = ids.joinToString(separator = ","))
+            val response = future?.get()
 
-        _favoriteRecipeListState.value = currentState.copy(
-            favoriteRecipeList = favoriteRecipeList,
-        )
+            if (response == null) {
+                _favoriteRecipeListState.postValue(null)
+
+                return
+            }
+
+            if (response.isSuccessful) {
+                val recipeList = response.body() ?: emptyList()
+                _favoriteRecipeListState.postValue(
+                    FavoriteRecipeListUiState(favoriteRecipeList = recipeList)
+                )
+            } else {
+                Log.e("CategoryListViewModel", "Ошибка: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("FavoriteRecipeListViewModel", "Ошибка загрузки списка рецептов", e)
+        }
     }
 }
