@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.safeargs)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
 }
@@ -62,4 +63,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.serialization.converter)
+    implementation(libs.glide)
+    ksp(libs.glide.compiler)
 }
