@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeListBinding
 
 class RecipeListFragment : Fragment() {
@@ -59,8 +61,12 @@ class RecipeListFragment : Fragment() {
                 return@observe
             }
 
-            val drawable = loadDrawableFromAssets(state.categoryImageUrl)
-            binding.ivFragmentListRecipesImageHeader.setImageDrawable(drawable)
+            Glide.with(this)
+                .load(state.categoryImageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivFragmentListRecipesImageHeader)
+
             binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов ${state.categoryName}"
             binding.tvFragmentListRecipesTitle.text = state.categoryName
             recipeListAdapter.dataSet = state.recipeList

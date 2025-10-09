@@ -1,10 +1,11 @@
 package com.example.recipes.ui.recipe.list
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.recipes.R
 import com.example.recipes.databinding.ItemRecipeBinding
 import com.example.recipes.model.Recipe
 
@@ -40,17 +41,17 @@ class RecipeListAdapter(var dataSet: List<Recipe>) :
 
         viewHolder.binding.tvRecipeTitle.text = recipe.title
 
-        val drawable = try {
-            Drawable.createFromStream(
-                viewHolder.itemView.context.assets.open(recipe.imageUrl),
-                null
-            )
+        try {
+            Glide.with(viewHolder.itemView.context)
+                .load(recipe.imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(viewHolder.binding.ivRecipeImage)
         } catch (e: Exception) {
             Log.e("ImageLoadError", "Image not found: ${recipe.title}", e)
             null
         }
 
-        viewHolder.binding.ivRecipeImage.setImageDrawable(drawable)
         viewHolder.binding.ivRecipeImage.contentDescription = "Изображение рецепта ${recipe.title}"
         viewHolder.binding.cvRecipeItem.setOnClickListener {
             itemClickListener?.onItemClick(recipe.id)

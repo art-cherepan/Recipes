@@ -28,7 +28,12 @@ class CategoryListViewModel() : ViewModel() {
             }
 
             if (response.isSuccessful) {
-                val categoryList = response.body() ?: emptyList()
+                val categoryList = response.body()?.map { category ->
+                    category.copy(
+                        imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + category.imageUrl,
+                    )
+                } ?: emptyList()
+
                 _categoryListState.postValue(
                     CategoryListUiState(categoryList = categoryList)
                 )

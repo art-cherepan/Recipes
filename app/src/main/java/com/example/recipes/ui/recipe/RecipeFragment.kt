@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.recipes.R
 import com.example.recipes.databinding.FragmentRecipeBinding
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -39,7 +40,11 @@ class RecipeFragment : Fragment() {
 
         recipeViewModel.recipeState.observe(viewLifecycleOwner) { state ->
             binding.tvFragmentRecipeTitle.text = state.recipe?.title
-            binding.ivFragmentRecipeImageHeader.setImageDrawable(state.recipeImage)
+            Glide.with(this)
+                .load(state.imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivFragmentRecipeImageHeader)
             binding.tvPortionCount.text = state.portionCount.toString()
             ingredientListAdapter.setPortionCount(state.portionCount)
             ingredientListAdapter.dataSet = state.recipe?.ingredients ?: emptyList()
