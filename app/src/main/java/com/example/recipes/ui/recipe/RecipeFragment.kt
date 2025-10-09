@@ -1,5 +1,6 @@
 package com.example.recipes.ui.recipe
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,23 +32,25 @@ class RecipeFragment : Fragment() {
         initUI()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initUI() {
-        recipeViewModel.loadRecipe(
-            id = args.recipeId,
-        )
-
         val ingredientListAdapter = IngredientListAdapter(emptyList())
         val methodListAdapter = MethodListAdapter(emptyList())
 
-        recipeViewModel.recipeState.observe(viewLifecycleOwner) {
-            item ->
-                binding.tvFragmentRecipeTitle.text = item.recipe?.title
-                binding.ivFragmentRecipeImageHeader.setImageDrawable(item.recipeImage)
-                binding.tvPortionCount.text = item.portionCount.toString()
-                ingredientListAdapter.setPortionCount(item.portionCount)
-                ingredientListAdapter.dataSet = item.recipe?.ingredients ?: emptyList()
-                methodListAdapter.dataSet = item.recipe?.method ?: emptyList()
+        recipeViewModel.recipeState.observe(viewLifecycleOwner) { state ->
+            binding.tvFragmentRecipeTitle.text = state.recipe?.title
+            binding.ivFragmentRecipeImageHeader.setImageDrawable(state.recipeImage)
+            binding.tvPortionCount.text = state.portionCount.toString()
+            ingredientListAdapter.setPortionCount(state.portionCount)
+            ingredientListAdapter.dataSet = state.recipe?.ingredients ?: emptyList()
+            methodListAdapter.dataSet = state.recipe?.method ?: emptyList()
+            ingredientListAdapter.notifyDataSetChanged()
+            methodListAdapter.notifyDataSetChanged()
         }
+
+        recipeViewModel.loadRecipe(
+            id = args.recipeId,
+        )
 
         setIcHeartImage(
             recipeIds = recipeViewModel.getFavoriteRecipeList(),

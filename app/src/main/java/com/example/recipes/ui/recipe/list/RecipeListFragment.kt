@@ -1,11 +1,13 @@
 package com.example.recipes.ui.recipe.list
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,7 +34,10 @@ class RecipeListFragment : Fragment() {
         initUI()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initUI() {
+        val recipeListAdapter = RecipeListAdapter(emptyList())
+
         try {
             recipeListViewModel.loadRecipeList(
                 categoryId = args.category.id,
@@ -43,14 +48,23 @@ class RecipeListFragment : Fragment() {
             throw IllegalStateException("Arguments must not be null")
         }
 
-        val recipeListAdapter = RecipeListAdapter(emptyList())
+        recipeListViewModel.recipeListState.observe(viewLifecycleOwner) { state ->
+            if (state == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Ошибка получения данных",
+                    Toast.LENGTH_SHORT,
+                ).show()
 
-        recipeListViewModel.recipeListState.observe(viewLifecycleOwner) { item ->
-            val drawable = loadDrawableFromAssets(item.categoryImageUrl)
+                return@observe
+            }
+
+            val drawable = loadDrawableFromAssets(state.categoryImageUrl)
             binding.ivFragmentListRecipesImageHeader.setImageDrawable(drawable)
-            binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов ${item.categoryName}"
-            binding.tvFragmentListRecipesTitle.text = item.categoryName
-            recipeListAdapter.dataSet = item.recipeList
+            binding.ivFragmentListRecipesImageHeader.contentDescription = "Изображение категории рецептов ${state.categoryName}"
+            binding.tvFragmentListRecipesTitle.text = state.categoryName
+            recipeListAdapter.dataSet = state.recipeList
+            recipeListAdapter.notifyDataSetChanged()
         }
 
         binding.rvRecipeList.adapter = recipeListAdapter
