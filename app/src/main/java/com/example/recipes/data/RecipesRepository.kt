@@ -24,6 +24,7 @@ class RecipesRepository {
 
     companion object {
         const val BASE_URL = "https://recipes.androidsprint.ru/api/"
+        const val BASE_IMAGE_URL = "https://recipes.androidsprint.ru/api/images/"
         const val THREAD_COUNT = 10
     }
 

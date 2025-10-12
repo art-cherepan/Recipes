@@ -38,7 +38,11 @@ class RecipeListViewModel() : ViewModel() {
             }
 
             if (response.isSuccessful) {
-                val recipeList = response.body() ?: emptyList()
+                val recipeList = response.body()?.map { recipe ->
+                    recipe.copy(
+                        imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe.imageUrl,
+                    )
+                } ?: emptyList()
 
                 _recipeListState.postValue(
                     RecipeListUiState(

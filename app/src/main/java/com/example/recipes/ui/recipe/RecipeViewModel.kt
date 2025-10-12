@@ -2,7 +2,6 @@ package com.example.recipes.ui.recipe
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
@@ -16,17 +15,13 @@ data class RecipeUiState(
     val recipe: Recipe? = null,
     val portionCount: Int = 1,
     val isFavorite: Boolean = false,
-    val recipeImage: Drawable? = null,
+    val imageUrl: String? = null,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
     private val repository = RecipesRepository()
     private val _recipeState = MutableLiveData(RecipeUiState())
     val recipeState: LiveData<RecipeUiState> = _recipeState
-
-    companion object {
-        const val DEFAULT_IMG_URL = "burger-hamburger.png"
-    }
 
     fun loadRecipe(id: Int?) {
         try {
@@ -47,25 +42,12 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 val favoriteRecipeIds = getFavoriteRecipeList()
                 val isFavorite = id.toString() in favoriteRecipeIds
 
-                val drawable = try {
-                    Drawable.createFromStream(
-                        application.assets?.open(recipe?.imageUrl ?: DEFAULT_IMG_URL ),
-                        null,
-                    )
-                } catch (e: Exception) {
-                    Log.e(
-                        "ImageLoadError", "Image not found: ${recipe?.imageUrl ?: DEFAULT_IMG_URL}",
-                        e,
-                    )
-                    null
-                }
-
                 _recipeState.postValue(
                     RecipeUiState(
                         recipe = recipe,
                         isFavorite = isFavorite,
                         portionCount = currentState.portionCount,
-                        recipeImage = drawable,
+                        imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe?.imageUrl,
                     )
                 )
             } else {

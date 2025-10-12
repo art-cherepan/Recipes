@@ -1,10 +1,11 @@
 package com.example.recipes.ui.category
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.recipes.R
 import com.example.recipes.databinding.ItemCategoryBinding
 import com.example.recipes.model.Category
 
@@ -36,17 +37,17 @@ class CategoryListAdapter(var dataSet: List<Category>) :
         viewHolder.binding.tvCategoryTitle.text = category.title
         viewHolder.binding.tvCategoryDescription.text = category.description
 
-        val drawable = try {
-            Drawable.createFromStream(
-                viewHolder.itemView.context.assets.open(category.imageUrl),
-                null
-            )
+        try {
+            Glide.with(viewHolder.itemView.context)
+                .load(category.imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(viewHolder.binding.ivCategoryImage)
         } catch (e: Exception) {
             Log.e("ImageLoadError", "Image not found: ${category.title}", e)
             null
         }
 
-        viewHolder.binding.ivCategoryImage.setImageDrawable(drawable)
         viewHolder.binding.ivCategoryImage.contentDescription = "Изображение категории ${category.title}"
         viewHolder.binding.cvCategoryItem.setOnClickListener {
             itemClickListener?.onItemClick(category.id)
