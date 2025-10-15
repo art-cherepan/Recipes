@@ -28,75 +28,58 @@ class RecipesRepository {
         const val THREAD_COUNT = 10
     }
 
-    fun getCategoryList(): Future<Response<List<Category>>>? {
+    suspend fun getCategoryList(): Response<List<Category>>? = withContext(Dispatchers.IO) {
         try {
-            val categoryListCall: Call<List<Category>> = service.getCategoryList()
-
-            return threadPool.submit<Response<List<Category>>> {
-                categoryListCall.execute()
-            }
+            val call = service.getCategoryList()
+            call.execute()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
-            return null
+            return@withContext null
         }
     }
 
-    fun getRecipeListByCategoryId(categoryId: Int): Future<Response<List<Recipe>>>? {
+    suspend fun getRecipeListByCategoryId(categoryId: Int): Response<List<Recipe>>? = withContext(Dispatchers.IO) {
         try {
-            val recipeListByCategoryIdCall: Call<List<Recipe>> = service.getRecipeListByCategoryId(
-                id = categoryId,
-            )
-
-            return threadPool.submit<Response<List<Recipe>>> {
-                recipeListByCategoryIdCall.execute()
-            }
+            val call = service.getRecipeListByCategoryId(id = categoryId)
+            call.execute()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
-            return null
+            return@withContext null
         }
     }
 
-    fun getRecipeById(recipeId: Int): Future<Response<Recipe>>? {
+    suspend fun getRecipeById(recipeId: Int): Response<Recipe>? = withContext(Dispatchers.IO) {
         try {
-            val recipeCall: Call<Recipe> = service.getRecipeById(id = recipeId)
-
-            return threadPool.submit<Response<Recipe>> {
-                recipeCall.execute()
-            }
+            val call = service.getRecipeById(id = recipeId)
+            call.execute()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
-            return null
+            return@withContext null
         }
     }
 
-    fun getRecipeList(recipeIds: String): Future<Response<List<Recipe>>>? {
+    suspend fun getRecipeList(recipeIds: String): Response<List<Recipe>>? = withContext(Dispatchers.IO) {
         try {
-            val recipeListCall: Call<List<Recipe>> = service.getRecipeList(query = recipeIds)
-
-            return threadPool.submit<Response<List<Recipe>>> {
-                recipeListCall.execute()
-            }
+            val call = service.getRecipeList(query = recipeIds)
+            call.execute()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
-            return null
+            return@withContext null
         }
     }
 
-    fun getCategoryById(categoryId: Int): Future<Response<Category>>? {
+    suspend fun getCategoryById(categoryId: Int): Response<Category>? = withContext(Dispatchers.IO) {
         try {
-            val category: Call<Category> = service.getCategoryById(id = categoryId)
-
-            return threadPool.submit<Response<Category>> {
-                category.execute()
-            }
+            val call = service.getCategoryById(id = categoryId)
+            call.execute()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
-            return null
+            return@withContext null
         }
     }
 }
