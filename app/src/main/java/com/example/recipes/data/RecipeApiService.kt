@@ -2,7 +2,7 @@ package com.example.recipes.data
 
 import com.example.recipes.model.Category
 import com.example.recipes.model.Recipe
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -10,19 +10,19 @@ import retrofit2.http.Query
 interface RecipeApiService {
 
     @GET("category")
-    fun getCategoryList(): Call<List<Category>>
+    suspend fun getCategoryList(): Response<List<Category>>
 
     @GET("recipes")
-    fun getRecipeList(
+    suspend fun getRecipeList(
         @Query("ids") query: String
-    ): Call<List<Recipe>>
+    ): Response<List<Recipe>>
 
     @GET("recipe/{id}")
-    fun getRecipeById(@Path("id") id: Int): Call<Recipe>
+    suspend fun getRecipeById(@Path("id") id: Int): Response<Recipe>
 
     @GET("category/{id}")
-    fun getCategoryById(@Path("id") id: Int): Call<Category>
+    suspend fun getCategoryById(@Path("id") id: Int): Response<Category>
 
     @GET("category/{id}/recipes")
-    fun getRecipeListByCategoryId(@Path("id") id: Int): Call<List<Recipe>>
+    suspend fun getRecipeListByCategoryId(@Path("id") id: Int): Response<List<Recipe>>
 }

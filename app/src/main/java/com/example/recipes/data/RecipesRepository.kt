@@ -26,8 +26,7 @@ class RecipesRepository {
 
     suspend fun getCategoryList(): Response<List<Category>>? = withContext(Dispatchers.IO) {
         try {
-            val call = service.getCategoryList()
-            call.execute()
+            service.getCategoryList()
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
@@ -37,8 +36,7 @@ class RecipesRepository {
 
     suspend fun getRecipeListByCategoryId(categoryId: Int): Response<List<Recipe>>? = withContext(Dispatchers.IO) {
         try {
-            val call = service.getRecipeListByCategoryId(id = categoryId)
-            call.execute()
+            service.getRecipeListByCategoryId(id = categoryId)
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
@@ -48,8 +46,7 @@ class RecipesRepository {
 
     suspend fun getRecipeById(recipeId: Int): Response<Recipe>? = withContext(Dispatchers.IO) {
         try {
-            val call = service.getRecipeById(id = recipeId)
-            call.execute()
+            service.getRecipeById(id = recipeId)
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
@@ -59,8 +56,7 @@ class RecipesRepository {
 
     suspend fun getRecipeList(recipeIds: String): Response<List<Recipe>>? = withContext(Dispatchers.IO) {
         try {
-            val call = service.getRecipeList(query = recipeIds)
-            call.execute()
+            service.getRecipeList(query = recipeIds)
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
@@ -70,8 +66,7 @@ class RecipesRepository {
 
     suspend fun getCategoryById(categoryId: Int): Response<Category>? = withContext(Dispatchers.IO) {
         try {
-            val call = service.getCategoryById(id = categoryId)
-            call.execute()
+            service.getCategoryById(id = categoryId)
         } catch (e: Exception) {
             Log.e("ConnectionThreadException", "Ошибка: ${e.message}", e)
 
