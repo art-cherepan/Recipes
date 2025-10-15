@@ -64,5 +64,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.serialization.converter)
     implementation(libs.glide)
+    implementation(libs.kotlinx.coroutines.android)
     ksp(libs.glide.compiler)
 }
