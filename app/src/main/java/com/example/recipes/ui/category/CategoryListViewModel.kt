@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Category
+import kotlinx.coroutines.launch
 
 data class CategoryListUiState(
     val categoryList: List<Category> = emptyList()
@@ -17,31 +19,32 @@ class CategoryListViewModel() : ViewModel() {
     val categoryListState: LiveData<CategoryListUiState> = _categoryListState
 
     fun loadCategoryList() {
-        try {
-            val future = repository.getCategoryList()
-            val response = future?.get()
+        viewModelScope.launch {
+            try {
+                val response = repository.getCategoryList()
 
-            if (response == null) {
-                _categoryListState.postValue(null)
+                if (response == null) {
+                    _categoryListState.postValue(null)
 
-                return
-            }
+                    return@launch
+                }
 
-            if (response.isSuccessful) {
-                val categoryList = response.body()?.map { category ->
-                    category.copy(
-                        imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + category.imageUrl,
+                if (response.isSuccessful) {
+                    val categoryList = response.body()?.map { category ->
+                        category.copy(
+                            imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + category.imageUrl,
+                        )
+                    } ?: emptyList()
+
+                    _categoryListState.postValue(
+                        CategoryListUiState(categoryList = categoryList)
                     )
-                } ?: emptyList()
-
-                _categoryListState.postValue(
-                    CategoryListUiState(categoryList = categoryList)
-                )
-            } else {
-                Log.e("CategoryListViewModel", "Ошибка: ${response.code()}")
+                } else {
+                    Log.e("CategoryListViewModel", "Ошибка: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("CategoryListViewModel", "Ошибка загрузки категорий рецептов", e)
             }
-        } catch (e: Exception) {
-            Log.e("CategoryListViewModel", "Ошибка загрузки категорий рецептов", e)
         }
     }
 }

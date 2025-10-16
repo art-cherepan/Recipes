@@ -7,9 +7,11 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.recipes.Constants
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
+import kotlinx.coroutines.launch
 
 data class RecipeUiState(
     val recipe: Recipe? = null,
@@ -24,37 +26,38 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     val recipeState: LiveData<RecipeUiState> = _recipeState
 
     fun loadRecipe(id: Int?) {
-        try {
-            val future = repository.getRecipeById(id ?: 0)
-            val response = future?.get()
+        viewModelScope.launch {
+            try {
+                val response = repository.getRecipeById(id ?: 0)
 
-            if (response == null) {
-                _recipeState.postValue(null)
+                if (response == null) {
+                    _recipeState.postValue(null)
 
-                return
-            }
+                    return@launch
+                }
 
-            if (response.isSuccessful) {
-                val recipe = response.body()
+                if (response.isSuccessful) {
+                    val recipe = response.body()
 
-                val currentState = _recipeState.value ?: RecipeUiState()
+                    val currentState = _recipeState.value ?: RecipeUiState()
 
-                val favoriteRecipeIds = getFavoriteRecipeList()
-                val isFavorite = id.toString() in favoriteRecipeIds
+                    val favoriteRecipeIds = getFavoriteRecipeList()
+                    val isFavorite = id.toString() in favoriteRecipeIds
 
-                _recipeState.postValue(
-                    RecipeUiState(
-                        recipe = recipe,
-                        isFavorite = isFavorite,
-                        portionCount = currentState.portionCount,
-                        imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe?.imageUrl,
+                    _recipeState.postValue(
+                        RecipeUiState(
+                            recipe = recipe,
+                            isFavorite = isFavorite,
+                            portionCount = currentState.portionCount,
+                            imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe?.imageUrl,
+                        )
                     )
-                )
-            } else {
-                Log.e("RecipeViewModel", "Ошибка: ${response.code()}")
+                } else {
+                    Log.e("RecipeViewModel", "Ошибка: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("RecipeViewModel", "Ошибка загрузки рецепта", e)
             }
-        } catch (e: Exception) {
-            Log.e("RecipeViewModel", "Ошибка загрузки рецепта", e)
         }
     }
 
