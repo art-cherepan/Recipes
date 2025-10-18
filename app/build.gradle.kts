@@ -66,4 +66,6 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.kotlinx.coroutines.android)
     ksp(libs.glide.compiler)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.room.compiler)
 }
