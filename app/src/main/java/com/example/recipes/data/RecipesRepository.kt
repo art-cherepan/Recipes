@@ -1,7 +1,11 @@
 package com.example.recipes.data
 
+import android.content.Context
 import android.util.Log
+import androidx.room.Room
+import com.example.recipes.db.AppDatabase
 import com.example.recipes.model.Category
+import com.example.recipes.model.CategoryListDao
 import com.example.recipes.model.Recipe
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +15,15 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipesRepository {
+class RecipesRepository(context: Context) {
+    private val db = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "database-recipes",
+    ).build()
+
+    private val categoryListDao: CategoryListDao = db.categoryListDao()
+
     private val contentType = "application/json".toMediaType()
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -22,6 +34,14 @@ class RecipesRepository {
     companion object {
         const val BASE_URL = "https://recipes.androidsprint.ru/api/"
         const val BASE_IMAGE_URL = "https://recipes.androidsprint.ru/api/images/"
+    }
+
+    suspend fun getCategoryListFromCache(): List<Category> = withContext(Dispatchers.IO) {
+        categoryListDao.getAll()
+    }
+
+    suspend fun insertAllCategories(categoryList: List<Category>) = withContext(Dispatchers.IO) {
+        categoryListDao.insertAll(categoryList)
     }
 
     suspend fun getCategoryList(): Response<List<Category>>? = withContext(Dispatchers.IO) {
