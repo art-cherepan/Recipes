@@ -24,11 +24,11 @@ data class Category (
 @Dao
 interface CategoryListDao {
     @Query("SELECT * FROM category")
-    fun getAll(): List<Category>
+    suspend fun getAll(): List<Category>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(categoryList: List<Category>)
+    suspend fun insertAll(categoryList: List<Category>)
 
     @Query("DELETE FROM category")
-    fun deleteAll()
+    suspend fun deleteAll()
 }
