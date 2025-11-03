@@ -24,11 +24,9 @@ class CategoryListViewModel(application: Application) : AndroidViewModel(applica
             try {
                 val categoryListFromCache = repository.getCategoryListFromCache()
 
-                if (categoryListFromCache.count() > 0) {
-                    _categoryListState.postValue(
-                        CategoryListUiState(categoryList = categoryListFromCache)
-                    )
-                }
+                _categoryListState.postValue(
+                    CategoryListUiState(categoryList = categoryListFromCache)
+                )
 
                 val response = repository.getCategoryList()
 
