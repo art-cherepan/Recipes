@@ -11,7 +11,7 @@ import androidx.room.Query
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Entity
+@Entity(tableName = "category")
 @Parcelize
 @Serializable
 data class Category (
