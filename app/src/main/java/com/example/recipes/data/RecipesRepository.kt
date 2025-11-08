@@ -23,7 +23,7 @@ class RecipesRepository(context: Context) {
     ).build()
 
     private val categoryListDao: CategoryListDao = db.categoryListDao()
-
+    private val recipeListDao: RecipeListDao = db.recipeListDao()
     private val contentType = "application/json".toMediaType()
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -42,6 +42,14 @@ class RecipesRepository(context: Context) {
 
     suspend fun insertAllCategories(categoryList: List<Category>) = withContext(Dispatchers.IO) {
         categoryListDao.insertAll(categoryList)
+    }
+
+    suspend fun getRecipeListByCategoryIdFromCache(categoryId: Int): List<Recipe> = withContext(Dispatchers.IO) {
+        recipeListDao.getRecipeListByCategory(categoryId = categoryId)
+    }
+
+    suspend fun insertAllRecipeList(recipeList: List<Recipe>) = withContext(Dispatchers.IO) {
+        recipeListDao.insertAll(recipeList)
     }
 
     suspend fun getCategoryList(): Response<List<Category>>? = withContext(Dispatchers.IO) {
