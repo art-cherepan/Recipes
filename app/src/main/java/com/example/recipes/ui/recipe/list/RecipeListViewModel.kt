@@ -17,7 +17,7 @@ data class RecipeListUiState(
     var recipeList: List<Recipe> = emptyList(),
 )
 
-class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
+class RecipeListViewModel(application: Application) : AndroidViewModel(application = application) {
 
     companion object {
         const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
@@ -30,6 +30,12 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
     fun loadRecipeList(categoryId: Int?, categoryName: String?, categoryImageUrl: String?) {
         viewModelScope.launch {
             try {
+                val recipeListByCategoryIdFromCache = repository.getRecipeListByCategoryIdFromCache(categoryId = categoryId ?: 0)
+
+                _recipeListState.postValue(
+                    RecipeListUiState(recipeList = recipeListByCategoryIdFromCache)
+                )
+
                 val response = repository.getRecipeListByCategoryId(
                     categoryId = categoryId ?: 0,
                 )
@@ -44,6 +50,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
                     val recipeList = response.body()?.map { recipe ->
                         recipe.copy(
                             imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe.imageUrl,
+                            categoryId = categoryId ?: 0,
                         )
                     } ?: emptyList()
 
@@ -55,6 +62,8 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
                             recipeList = recipeList,
                         )
                     )
+
+                    repository.insertAllRecipeList(recipeList)
                 } else {
                     Log.e("RecipeListViewModel", "Ошибка: ${response.code()}")
                 }
