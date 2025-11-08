@@ -48,7 +48,6 @@ class CategoryListViewModel(application: Application) : AndroidViewModel(applica
                     )
 
                     repository.insertAllCategories(categoryList)
-
                 } else {
                     Log.e("CategoryListViewModel", "Ошибка: ${response.code()}")
                 }
