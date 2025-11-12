@@ -21,3 +21,10 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         db.execSQL("CREATE INDEX IF NOT EXISTS index_recipe_category_id ON recipe(category_id)")
     }
 }
+
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE recipe ADD COLUMN is_favorite INTEGER NOT NULL DEFAULT 0")
+    }
+}

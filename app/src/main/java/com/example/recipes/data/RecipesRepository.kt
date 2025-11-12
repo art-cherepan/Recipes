@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import com.example.recipes.db.AppDatabase
 import com.example.recipes.db.MIGRATION_1_2
+import com.example.recipes.db.MIGRATION_2_3
 import com.example.recipes.model.Category
 import com.example.recipes.model.CategoryListDao
 import com.example.recipes.model.Recipe
@@ -18,12 +19,17 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class RecipesRepository(context: Context) {
+    private val ALL_MIGRATIONS = arrayOf(
+        MIGRATION_1_2,
+        MIGRATION_2_3,
+    )
+
     private val db = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
         "database-recipes",
     )
-        .addMigrations(MIGRATION_1_2)
+        .addMigrations(*ALL_MIGRATIONS)
         .build()
 
     private val categoryListDao: CategoryListDao = db.categoryListDao()

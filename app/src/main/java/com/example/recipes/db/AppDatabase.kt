@@ -11,7 +11,7 @@ import com.example.recipes.model.converter.IngredientListConverter
 
 @Database(
     entities = [Category::class, Recipe::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(IngredientListConverter::class)
