@@ -33,7 +33,12 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
                 val recipeListByCategoryIdFromCache = repository.getRecipeListByCategoryIdFromCache(categoryId = categoryId ?: 0)
 
                 _recipeListState.postValue(
-                    RecipeListUiState(recipeList = recipeListByCategoryIdFromCache)
+                    RecipeListUiState(
+                        categoryId = categoryId,
+                        categoryName = categoryName,
+                        categoryImageUrl = categoryImageUrl ?: DEFAULT_CATEGORY_HEADER_IMG_URL,
+                        recipeList = recipeListByCategoryIdFromCache,
+                    )
                 )
 
                 val response = repository.getRecipeListByCategoryId(
