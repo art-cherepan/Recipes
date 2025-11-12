@@ -41,9 +41,18 @@ interface RecipeListDao {
     @Query("SELECT * FROM recipe WHERE category_id = :categoryId")
     suspend fun getRecipeListByCategory(categoryId: Int): List<Recipe>
 
+    @Query("SELECT * FROM recipe WHERE is_favorite = 1")
+    suspend fun getFavorites(): List<Recipe>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun  insertAll(recipeList: List<Recipe>)
 
     @Query("DELETE FROM recipe")
     suspend fun  deleteAll()
+
+    @Query("UPDATE recipe SET is_favorite = :isFavorite WHERE id IN (:ids)")
+    suspend fun updateFavorites(ids: List<Int>, isFavorite: Boolean)
+
+    @Query("UPDATE recipe SET is_favorite = NOT is_favorite WHERE id = :id")
+    suspend fun toggleFavorite(id: Int)
 }

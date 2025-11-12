@@ -58,6 +58,10 @@ class RecipesRepository(context: Context) {
         recipeListDao.getRecipeListByCategory(categoryId = categoryId)
     }
 
+    suspend fun getFavoriteRecipeListFromCache(): List<Recipe> = withContext(Dispatchers.IO) {
+        recipeListDao.getFavorites()
+    }
+
     suspend fun insertAllRecipeList(recipeList: List<Recipe>) = withContext(Dispatchers.IO) {
         recipeListDao.insertAll(recipeList)
     }
@@ -110,5 +114,13 @@ class RecipesRepository(context: Context) {
 
             return@withContext null
         }
+    }
+
+    suspend fun updateFavorites(ids: List<Int>, isFavorite: Boolean) {
+        recipeListDao.updateFavorites(ids, isFavorite)
+    }
+
+    suspend fun toggleFavorite(id: Int) {
+        recipeListDao.toggleFavorite(id)
     }
 }
