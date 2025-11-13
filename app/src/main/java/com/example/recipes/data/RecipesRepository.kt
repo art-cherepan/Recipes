@@ -116,11 +116,11 @@ class RecipesRepository(context: Context) {
         }
     }
 
-    suspend fun updateFavorites(ids: List<Int>, isFavorite: Boolean) {
+    suspend fun updateFavorites(ids: List<Int>, isFavorite: Boolean) = withContext(Dispatchers.IO) {
         recipeListDao.updateFavorites(ids, isFavorite)
     }
 
-    suspend fun toggleFavorite(id: Int) {
+    suspend fun toggleFavorite(id: Int) = withContext(Dispatchers.IO) {
         recipeListDao.toggleFavorite(id)
     }
 }
