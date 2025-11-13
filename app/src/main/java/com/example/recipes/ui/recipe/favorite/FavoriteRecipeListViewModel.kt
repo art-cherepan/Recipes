@@ -14,7 +14,7 @@ data class FavoriteRecipeListUiState(
     val favoriteRecipeList: List<Recipe> = emptyList(),
 )
 
-class FavoriteRecipeListViewModel(application: Application) : AndroidViewModel(application) {
+class FavoriteRecipeListViewModel(application: Application) : AndroidViewModel(application = application) {
     private val repository = RecipesRepository(context = application.applicationContext)
     private val _favoriteRecipeListState = MutableLiveData(FavoriteRecipeListUiState())
     val favoriteRecipeListState: LiveData<FavoriteRecipeListUiState> = _favoriteRecipeListState
@@ -22,6 +22,12 @@ class FavoriteRecipeListViewModel(application: Application) : AndroidViewModel(a
     fun loadFavoriteRecipeList(ids: Set<Int>) {
         viewModelScope.launch {
             try {
+                val favoriteRecipeListFromCache = repository.getFavoriteRecipeListFromCache()
+
+                _favoriteRecipeListState.postValue(
+                    FavoriteRecipeListUiState(favoriteRecipeList = favoriteRecipeListFromCache)
+                )
+
                 val response = repository.getRecipeList(recipeIds = ids.joinToString(separator = ","))
 
                 if (response == null) {
@@ -36,6 +42,9 @@ class FavoriteRecipeListViewModel(application: Application) : AndroidViewModel(a
                             imageUrl = RecipesRepository::BASE_IMAGE_URL.get() + recipe.imageUrl,
                         )
                     } ?: emptyList()
+
+                    val ids = recipeList.map { it.id }
+                    repository.updateFavorites(ids, true)
 
                     _favoriteRecipeListState.postValue(
                         FavoriteRecipeListUiState(favoriteRecipeList = recipeList)

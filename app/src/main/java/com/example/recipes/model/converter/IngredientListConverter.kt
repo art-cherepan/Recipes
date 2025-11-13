@@ -7,9 +7,10 @@ import kotlinx.serialization.json.Json
 class IngredientListConverter {
     private val json = Json { ignoreUnknownKeys = true }
 
+    // --- Для списка ингредиентов ---
     @TypeConverter
-    fun fromIngredientList(value: List<Ingredient>): String {
-        return json.encodeToString(value)
+    fun fromIngredientList(value: List<Ingredient>?): String {
+        return json.encodeToString(value ?: emptyList())
     }
 
     @TypeConverter
@@ -17,9 +18,10 @@ class IngredientListConverter {
         return json.decodeFromString(value)
     }
 
+    // --- Для списка методов ---
     @TypeConverter
-    fun fromStringList(value: List<String>): String {
-        return json.encodeToString(value)
+    fun fromStringList(value: List<String>?): String {
+        return json.encodeToString(value ?: emptyList())
     }
 
     @TypeConverter

@@ -65,6 +65,10 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val current = _recipeState.value ?: RecipeUiState()
         _recipeState.value = current.copy(isFavorite = !current.isFavorite)
 
+        viewModelScope.launch {
+            repository.toggleFavorite(_recipeState.value?.recipe?.id ?: 0)
+        }
+
         val favoriteRecipeIds: MutableSet<String> = getFavoriteRecipeList().toMutableSet()
 
         if (_recipeState.value?.isFavorite == true) {
