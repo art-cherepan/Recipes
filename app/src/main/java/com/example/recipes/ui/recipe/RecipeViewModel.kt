@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.core.content.edit
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipes.Constants
 import com.example.recipes.data.RecipesRepository
@@ -20,8 +20,11 @@ data class RecipeUiState(
     val imageUrl: String? = null,
 )
 
-class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository = RecipesRepository(context = application.applicationContext)
+class RecipeViewModel(
+    private val repository: RecipesRepository,
+    private val application: Application,
+    ) : ViewModel() {
+
     private val _recipeState = MutableLiveData(RecipeUiState())
     val recipeState: LiveData<RecipeUiState> = _recipeState
 

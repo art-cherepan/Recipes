@@ -1,10 +1,9 @@
 package com.example.recipes.ui.recipe.favorite
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
@@ -14,8 +13,10 @@ data class FavoriteRecipeListUiState(
     val favoriteRecipeList: List<Recipe> = emptyList(),
 )
 
-class FavoriteRecipeListViewModel(application: Application) : AndroidViewModel(application = application) {
-    private val repository = RecipesRepository(context = application.applicationContext)
+class FavoriteRecipeListViewModel(
+    private val repository: RecipesRepository,
+    ) : ViewModel() {
+
     private val _favoriteRecipeListState = MutableLiveData(FavoriteRecipeListUiState())
     val favoriteRecipeListState: LiveData<FavoriteRecipeListUiState> = _favoriteRecipeListState
 
