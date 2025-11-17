@@ -1,10 +1,9 @@
 package com.example.recipes.ui.recipe.list
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
@@ -17,14 +16,15 @@ data class RecipeListUiState(
     var recipeList: List<Recipe> = emptyList(),
 )
 
-class RecipeListViewModel(application: Application) : AndroidViewModel(application = application) {
+class RecipeListViewModel(
+    private val repository: RecipesRepository,
+    ) : ViewModel() {
 
     companion object {
         const val DEFAULT_CATEGORY_HEADER_IMG_URL = "burger.png"
     }
 
     private val _recipeListState = MutableLiveData(RecipeListUiState())
-    private val repository = RecipesRepository(context = application.applicationContext)
     val recipeListState: LiveData<RecipeListUiState> = _recipeListState
 
     fun loadRecipeList(categoryId: Int?, categoryName: String?, categoryImageUrl: String?) {

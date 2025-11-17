@@ -8,16 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipes.Constants
+import com.example.recipes.RecipesApplication
 import com.example.recipes.databinding.FragmentFavoriteListBinding
 import com.example.recipes.ui.recipe.list.RecipeListAdapter
-import kotlin.getValue
 
 class FavoriteRecipeListFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteListBinding
-    private val favoriteRecipeListViewModel: FavoriteRecipeListViewModel by viewModels()
+    private lateinit var favoriteRecipeListViewModel: FavoriteRecipeListViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipesApplication).appContainer
+        favoriteRecipeListViewModel = appContainer.favoriteRecipeListViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
