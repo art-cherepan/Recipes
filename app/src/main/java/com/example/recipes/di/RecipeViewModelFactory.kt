@@ -11,7 +11,7 @@ class RecipeViewModelFactory(
 
     override fun create(): RecipeViewModel {
         return RecipeViewModel(
-            repository = recipesRepository,
+            recipesRepository = recipesRepository,
             application = application,
         )
     }
