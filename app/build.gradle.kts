@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.safeargs)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
 }
@@ -68,6 +69,8 @@ dependencies {
     ksp(libs.glide.compiler)
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }
 
 ksp {

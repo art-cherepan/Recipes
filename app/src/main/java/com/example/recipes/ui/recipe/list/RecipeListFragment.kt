@@ -7,23 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.recipes.R
-import com.example.recipes.RecipesApplication
 import com.example.recipes.databinding.FragmentRecipeListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeListFragment : Fragment() {
     private lateinit var binding: FragmentRecipeListBinding
-    private lateinit var recipeListViewModel: RecipeListViewModel
     private val args: RecipeListFragmentArgs by navArgs()
+
+    private val recipeListViewModel: RecipeListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appContainer
-        recipeListViewModel = appContainer.recipeListViewModelFactory.create()
     }
 
     override fun onCreateView(

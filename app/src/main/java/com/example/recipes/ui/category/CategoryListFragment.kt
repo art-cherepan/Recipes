@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.recipes.RecipesApplication
 import com.example.recipes.databinding.FragmentCategoryListBinding
 import com.example.recipes.model.Category
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoryListFragment : Fragment() {
     private lateinit var binding: FragmentCategoryListBinding
-    private lateinit var  categoryListViewModel: CategoryListViewModel
     private var categoryList: List<Category> = emptyList()
+
+    private val  categoryListViewModel: CategoryListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val appContainer = (requireActivity().application as RecipesApplication).appContainer
-        categoryListViewModel = appContainer.categoryListViewModelFactory.create()
     }
 
     override fun onCreateView(
