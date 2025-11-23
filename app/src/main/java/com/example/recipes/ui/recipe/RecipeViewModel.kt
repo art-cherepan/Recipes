@@ -11,7 +11,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.recipes.Constants
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class RecipeUiState(
     val recipe: Recipe? = null,
@@ -20,8 +22,9 @@ data class RecipeUiState(
     val imageUrl: String? = null,
 )
 
-class RecipeViewModel(
-    private val repository: RecipesRepository,
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
+    private val recipesRepository: RecipesRepository,
     private val application: Application,
     ) : ViewModel() {
 
@@ -31,7 +34,7 @@ class RecipeViewModel(
     fun loadRecipe(id: Int?) {
         viewModelScope.launch {
             try {
-                val response = repository.getRecipeById(id ?: 0)
+                val response = recipesRepository.getRecipeById(id ?: 0)
 
                 if (response == null) {
                     _recipeState.postValue(null)
@@ -69,7 +72,7 @@ class RecipeViewModel(
         _recipeState.value = current.copy(isFavorite = !current.isFavorite)
 
         viewModelScope.launch {
-            repository.toggleFavorite(_recipeState.value?.recipe?.id ?: 0)
+            recipesRepository.toggleFavorite(_recipeState.value?.recipe?.id ?: 0)
         }
 
         val favoriteRecipeIds: MutableSet<String> = getFavoriteRecipeList().toMutableSet()

@@ -7,14 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class FavoriteRecipeListUiState(
     val favoriteRecipeList: List<Recipe> = emptyList(),
 )
 
-class FavoriteRecipeListViewModel(
-    private val repository: RecipesRepository,
+@HiltViewModel
+class FavoriteRecipeListViewModel @Inject constructor(
+    private val recipesRepository: RecipesRepository,
     ) : ViewModel() {
 
     private val _favoriteRecipeListState = MutableLiveData(FavoriteRecipeListUiState())
@@ -23,13 +26,13 @@ class FavoriteRecipeListViewModel(
     fun loadFavoriteRecipeList(ids: Set<Int>) {
         viewModelScope.launch {
             try {
-                val favoriteRecipeListFromCache = repository.getFavoriteRecipeListFromCache()
+                val favoriteRecipeListFromCache = recipesRepository.getFavoriteRecipeListFromCache()
 
                 _favoriteRecipeListState.postValue(
                     FavoriteRecipeListUiState(favoriteRecipeList = favoriteRecipeListFromCache)
                 )
 
-                val response = repository.getRecipeList(recipeIds = ids.joinToString(separator = ","))
+                val response = recipesRepository.getRecipeList(recipeIds = ids.joinToString(separator = ","))
 
                 if (response == null) {
                     _favoriteRecipeListState.postValue(null)
@@ -45,7 +48,7 @@ class FavoriteRecipeListViewModel(
                     } ?: emptyList()
 
                     val ids = recipeList.map { it.id }
-                    repository.updateFavorites(ids, true)
+                    recipesRepository.updateFavorites(ids, true)
 
                     _favoriteRecipeListState.postValue(
                         FavoriteRecipeListUiState(favoriteRecipeList = recipeList)

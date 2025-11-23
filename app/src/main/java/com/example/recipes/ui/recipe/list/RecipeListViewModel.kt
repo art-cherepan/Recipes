@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipes.data.RecipesRepository
 import com.example.recipes.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class RecipeListUiState(
     val categoryId: Int? = null,
@@ -16,8 +18,9 @@ data class RecipeListUiState(
     var recipeList: List<Recipe> = emptyList(),
 )
 
-class RecipeListViewModel(
-    private val repository: RecipesRepository,
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(
+    private val recipesRepository: RecipesRepository,
     ) : ViewModel() {
 
     companion object {
@@ -30,7 +33,7 @@ class RecipeListViewModel(
     fun loadRecipeList(categoryId: Int?, categoryName: String?, categoryImageUrl: String?) {
         viewModelScope.launch {
             try {
-                val recipeListByCategoryIdFromCache = repository.getRecipeListByCategoryIdFromCache(categoryId = categoryId ?: 0)
+                val recipeListByCategoryIdFromCache = recipesRepository.getRecipeListByCategoryIdFromCache(categoryId = categoryId ?: 0)
 
                 _recipeListState.postValue(
                     RecipeListUiState(
@@ -41,7 +44,7 @@ class RecipeListViewModel(
                     )
                 )
 
-                val response = repository.getRecipeListByCategoryId(
+                val response = recipesRepository.getRecipeListByCategoryId(
                     categoryId = categoryId ?: 0,
                 )
 
@@ -68,7 +71,7 @@ class RecipeListViewModel(
                         )
                     )
 
-                    repository.insertAllRecipeList(recipeList)
+                    recipesRepository.insertAllRecipeList(recipeList)
                 } else {
                     Log.e("RecipeListViewModel", "Ошибка: ${response.code()}")
                 }

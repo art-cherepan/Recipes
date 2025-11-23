@@ -8,8 +8,9 @@ import com.example.recipes.model.RecipeListDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class RecipesRepository(
+class RecipesRepository @Inject constructor(
     private val recipeListDao: RecipeListDao,
     private val categoryListDao: CategoryListDao,
     private val recipeApiService: RecipeApiService,
